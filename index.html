@@ -5,167 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Космос 4</title>
 <style>
-  * { box-sizing: border-box; }
-  body { margin:0; background:#0a0e27; color:#e0e0ff;
-         font-family:system-ui,sans-serif; min-height:100vh; }
-  .wrap { max-width:700px; margin:0 auto; padding:40px 20px; }
-  .card { background:#141a3d; padding:36px; border-radius:16px;
-          border:1px solid #2a3366; }
-  h1 { margin:0 0 8px; font-size:28px; text-align:center; }
-  .sub { color:#8890b5; text-align:center; margin:0 0 28px; }
-  input, textarea { width:100%; padding:12px 16px; font-size:16px;
-          border-radius:8px; border:1px solid #2a3366; background:#0a0e27;
-          color:#fff; margin-bottom:12px; font-family:inherit; }
-  input.code { text-align:center; letter-spacing:4px;
-          text-transform:uppercase; font-size:20px; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:#0a0e27; color:#e0e0ff;
+         font-family:system-ui,sans-serif; display:flex;
+         align-items:center; justify-content:center; padding:20px; }
+  .card { background:#141a3d; border:1px solid #2a3366;
+          border-radius:16px; padding:36px; text-align:center;
+          max-width:440px; width:100%; }
+  h1 { margin:0 0 8px; font-size:26px; }
+  p  { color:#8890b5; margin:0 0 24px; }
+  input { width:100%; padding:12px 16px; font-size:18px;
+          border-radius:8px; border:1px solid #2a3366;
+          background:#0a0e27; color:#fff; text-align:center;
+          letter-spacing:4px; text-transform:uppercase;
+          margin-bottom:12px; }
   button { width:100%; padding:12px; font-size:16px; border-radius:8px;
-           border:none; background:#4a5cff; color:#fff; cursor:pointer;
-           margin-bottom:8px; }
+           border:none; background:#4a5cff; color:#fff; cursor:pointer; }
   button:hover { background:#5c6cff; }
-  button.sec { background:#2a3366; }
-  button.sec:hover { background:#3a4480; }
-  .msg { text-align:center; min-height:22px; margin-top:8px; color:#ff6b6b; }
-  .code-out { font-size:24px; letter-spacing:6px; color:#7cf;
-              text-align:center; padding:16px; background:#0a0e27;
-              border-radius:8px; margin:12px 0; word-break:break-all; }
-  .page { display:none; }
-  .page.active { display:block; }
-  .content { line-height:1.7; }
-  a { color:#7cf; }
+  .msg { min-height:20px; margin-top:10px; color:#ff6b6b; }
+  img.qr { width:220px; height:220px; background:#fff;
+           padding:12px; border-radius:12px; margin:16px auto;
+           display:block; }
+  .hint { margin-top:16px; color:#7cf; }
   .back { display:inline-block; margin-top:20px; color:#8890b5;
           cursor:pointer; text-decoration:underline; }
-  label { font-size:14px; color:#8890b5; display:block; margin-bottom:4px; }
-  pre { background:#0a0e27; padding:16px; border-radius:8px;
-        overflow:auto; font-size:13px; }
-  hr { border:none; border-top:1px solid #2a3366; margin:24px 0; }
+  .page { display:none; }
+  .page.active { display:block; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <!-- ===== ГЛАВНАЯ ===== -->
-  <div id="page-login" class="page active">
-    <div class="card">
-      <h1>🚀 Космос 4</h1>
-      <p class="sub">Введите код доступа</p>
-      <input id="codeInput" class="code" maxlength="12"
-             placeholder="КОД" autocomplete="off">
-      <button onclick="checkCode()">Войти</button>
-      <button class="sec" onclick="showPage('page-admin')">
-        ⚙️ Панель автора
-      </button>
-      <div id="loginMsg" class="msg"></div>
-    </div>
+<!-- ГЛАВНАЯ -->
+<div id="page-login" class="page active">
+  <div class="card">
+    <h1>🚀 Космос 4</h1>
+    <p>Введите код доступа</p>
+    <input id="codeInput" maxlength="12" placeholder="КОД" autocomplete="off">
+    <button onclick="checkCode()">Войти</button>
+    <div id="loginMsg" class="msg"></div>
   </div>
+</div>
 
-  <!-- ===== ПАНЕЛЬ АВТОРА ===== -->
-  <div id="page-admin" class="page">
-    <div class="card">
-      <h1>⚙️ Панель автора</h1>
-
-      <label>Пароль</label>
-      <input id="adminPass" type="password" placeholder="Пароль">
-      <button onclick="unlockAdmin()">Войти в панель</button>
-
-      <div id="adminPanel" style="display:none">
-        <hr>
-        <label>Страница для кода</label>
-        <select id="pageSelect">
-          <option value="page1">Страница 1</option>
-          <option value="page2">Страница 2</option>
-        </select>
-        <button onclick="genCode()">Сгенерировать код</button>
-        <div id="genOut" class="code-out" style="display:none"></div>
-        <p class="sub" style="font-size:13px; margin-top:8px">
-          Скопируй код и добавь его в <code>CODES</code> ниже
-        </p>
-
-        <hr>
-        <label>Все коды (JSON) — редактируй и жми «Сохранить»</label>
-        <textarea id="codesEditor" rows="8"></textarea>
-        <button onclick="saveCodes()">💾 Сохранить коды</button>
-        <div id="saveMsg" class="msg"></div>
-      </div>
-
-      <span class="back" onclick="showPage('page-login')">← Назад</span>
-    </div>
+<!-- СТРАНИЦА С QR -->
+<div id="page-qr" class="page">
+  <div class="card">
+    <h1>📷 Шаг 1</h1>
+    <p>Отсканируй QR-код</p>
+    <img class="qr"
+         src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=Привет!+Жди+следующего+шага+🚀"
+         alt="QR-код">
+    <div class="hint">Потихоньку отсканируй и жди следующего 🚀</div>
+    <span class="back" onclick="showPage('page-login')">← Назад</span>
   </div>
-
-  <!-- ===== СТРАНИЦА 1 ===== -->
-  <div id="page1" class="page">
-    <div class="card">
-      <h1>🌌 Страница 1</h1>
-      <div class="content">
-        <p>Здесь твой контент для первого кода.
-           Можешь заменить этот текст на что угодно.</p>
-      </div>
-      <span class="back" onclick="showPage('page-login')">← Назад</span>
-    </div>
-  </div>
-
-  <!-- ===== СТРАНИЦА 2 ===== -->
-  <div id="page2" class="page">
-    <div class="card">
-      <h1>🪐 Страница 2</h1>
-      <div class="content">
-        <p>Здесь твой контент для второго кода.</p>
-      </div>
-      <span class="back" onclick="showPage('page-login')">← Назад</span>
-    </div>
-  </div>
-
 </div>
 
 <script>
-/* ===== НАСТРОЙКИ ===== */
-const ADMIN_PASSWORD = "космос2024";   // ← СМЕНИ ПАРОЛЬ
-const CODES_KEY = "kosmos4_codes";
-
-/* Коды по умолчанию (можно менять в панели) */
-const DEFAULT_CODES = {
-  "КОСМОС4": "page1",
-  "АБВГ":    "page2"
+/* ===== КОДЫ ===== */
+const CODES = {
+  "КОСМОС4": "page-qr"     // ← код ведёт на страницу с QR
 };
 
-/* ===== ХРАНИЛИЩЕ КОДОВ (localStorage, чтобы панель работала) ===== */
-function loadCodes() {
-  const raw = localStorage.getItem(CODES_KEY);
-  if (raw) {
-    try { return JSON.parse(raw); } catch(e) {}
-  }
-  localStorage.setItem(CODES_KEY, JSON.stringify(DEFAULT_CODES));
-  return DEFAULT_CODES;
-}
-
-function saveCodesToStorage(obj) {
-  localStorage.setItem(CODES_KEY, JSON.stringify(obj));
-}
-
-/* ===== НАВИГАЦИЯ ===== */
 function showPage(id) {
   document.querySelectorAll('.page')
     .forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  // меняем URL-хэш
-  if (id.startsWith('page-')) location.hash = '';
-  else location.hash = id;
+  location.hash = (id === 'page-login') ? '' : id;
   window.scrollTo(0,0);
 }
 
-/* ===== ПРОВЕРКА КОДА ===== */
 function checkCode() {
   const code = document.getElementById('codeInput').value
                  .trim().toUpperCase();
   const msg  = document.getElementById('loginMsg');
   if (!code) { msg.textContent = 'Введите код'; return; }
 
-  const codes = loadCodes();
-  const target = codes[code];
-
-  if (target) {
+  if (CODES[code]) {
     msg.textContent = '';
-    location.hash = code;              // меняем URL: сайт.com/#АБВГ
-    showPage(target);
+    showPage(CODES[code]);
   } else {
     msg.textContent = '❌ Код не найден';
   }
@@ -176,61 +92,9 @@ document.getElementById('codeInput')
     if (e.key === 'Enter') checkCode();
   });
 
-/* ===== ПАНЕЛЬ ===== */
-function unlockAdmin() {
-  const pass = document.getElementById('adminPass').value;
-  if (pass === ADMIN_PASSWORD) {
-    document.getElementById('adminPanel').style.display = 'block';
-    document.getElementById('codesEditor').value =
-      JSON.stringify(loadCodes(), null, 2);
-  } else {
-    alert('Неверный пароль');
-  }
-}
-
-const ALPH = 'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЭЮЯ0123456789';
-
-function genCode() {
-  let code = '';
-  for (let i = 0; i < 6; i++)
-    code += ALPH[Math.floor(Math.random()*ALPH.length)];
-
-  const out = document.getElementById('genOut');
-  out.style.display = 'block';
-  out.textContent = code;
-  navigator.clipboard.writeText(code).catch(()=>{});
-
-  // автоматически добавляем в редактор
-  const page = document.getElementById('pageSelect').value;
-  const codes = loadCodes();
-  codes[code] = page;
-  saveCodesToStorage(codes);
-  document.getElementById('codesEditor').value =
-    JSON.stringify(codes, null, 2);
-}
-
-function saveCodes() {
-  try {
-    const obj = JSON.parse(document.getElementById('codesEditor').value);
-    saveCodesToStorage(obj);
-    document.getElementById('saveMsg').style.color = '#7cf';
-    document.getElementById('saveMsg').textContent = '✅ Сохранено';
-    setTimeout(()=>{document.getElementById('saveMsg').textContent='';}, 2000);
-  } catch(e) {
-    document.getElementById('saveMsg').style.color = '#ff6b6b';
-    document.getElementById('saveMsg').textContent = '❌ Ошибка JSON';
-  }
-}
-
-/* ===== СТАРТ ===== */
-loadCodes();  // инициализация
-
-/* если в URL есть #КОД — сразу открываем */
-const hash = location.hash.replace('#','').toUpperCase();
-if (hash) {
-  const codes = loadCodes();
-  if (codes[hash]) showPage(codes[hash]);
-}
+/* если в URL есть #page-qr — открыть сразу */
+const hash = location.hash.replace('#','');
+if (hash && document.getElementById(hash)) showPage(hash);
 </script>
 </body>
 </html>
