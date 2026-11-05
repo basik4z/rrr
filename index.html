@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Космос 4 · Сказки</title>
+<title>Космос 4 · Математика</title>
 <style>
   :root {
     --bg-deep:#03060f;
@@ -367,9 +367,7 @@
     font-size:14px;
   }
   .results-table tr:last-child td { border-bottom:none; }
-  .results-table tbody tr {
-    transition:background .2s;
-  }
+  .results-table tbody tr { transition:background .2s; }
   .results-table tbody tr:hover td {
     background:rgba(56,224,255,.05);
   }
@@ -381,7 +379,6 @@
     color:var(--gold); font-weight:800;
     text-shadow:0 0 15px rgba(255,204,77,.6);
   }
-  /* Подсказка / факт */
   .fact {
     margin-top:18px; padding:16px 20px;
     background:rgba(56,224,255,.06);
@@ -403,9 +400,9 @@
 
   <!-- ВХОД -->
   <div id="screen-login" class="card">
-    <div class="emblem">🚀</div>
+    <div class="emblem">🧮</div>
     <h1>КОСМОС 4</h1>
-    <p class="sub">Викторина по сказкам · 10 вопросов</p>
+    <p class="sub">Математика · 10 вопросов</p>
     <input id="nameInput" placeholder="Твоё имя" maxlength="20">
     <button class="main" onclick="startQuiz()">🎮 Начать викторину</button>
     <button class="admin-btn" onclick="showAdminLogin()">
@@ -470,77 +467,77 @@
 <script>
 const ADMIN_PASSWORD = "vodadmin";
 
-/* ===== 10 ВОПРОСОВ С ПОДСКАЗКАМИ ===== */
+/* ===== МАТЕМАТИКА В СТИЛЕ ОГЭ/ЕГЭ (1–2 класс) ===== */
 const SLIDES = [
   {
-    q:"Кто съел Колобка в конце сказки?",
-    img:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800",
-    options:["Волк","Лиса","Медведь","Заяц"],
-    correct:1,
-    fact:"🦊 Лиса обхитрила Колобка — попросила сесть ей на нос и съела."
-  },
-  {
-    q:"Кто сломал теремок?",
-    img:"https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800",
-    options:["Мышка","Лягушка","Медведь","Лиса"],
+    q:"Сколько будет 7 + 5?",
+    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
+    options:["10","11","12","13"],
     correct:2,
-    fact:"🐻 Медведь был слишком большим для теремка — он и развалил домик."
+    fact:"📚 7 + 5 = 12. Сначала прибавляем 3 до 10, потом ещё 2."
   },
   {
-    q:"Что потеряла Золушка на балу?",
-    img:"https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800",
-    options:["Кольцо","Туфельку","Платок","Корону"],
+    q:"Сколько будет 15 − 8?",
+    img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
+    options:["6","7","8","9"],
     correct:1,
-    fact:"👠 Хрустальная туфелька помогла принцу найти Золушку."
+    fact:"📚 15 − 8 = 7. Можно отнять 5 до 10, потом ещё 3."
   },
   {
-    q:"Кто вытянул репку последним?",
-    img:"https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=800",
-    options:["Дед","Бабка","Внучка","Мышка"],
-    correct:3,
-    fact:"🐭 Маленькая мышка оказалась решающей — без неё репку не вытянули бы!"
+    q:"Сколько будет 4 × 3?",
+    img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+    options:["7","10","12","14"],
+    correct:2,
+    fact:"✖️ 4 × 3 = 12. Это 4 + 4 + 4."
   },
   {
-    q:"Какого цвета была шапочка у Красной Шапочки?",
-    img:"https://images.unsplash.com/photo-1596707062890-8f4f2a4e0e5a?w=800",
-    options:["Красного","Синего","Зелёного","Жёлтого"],
-    correct:0,
-    fact:"🎩 Девочку прозвали Красной Шапочкой именно из-за её красного головного убора."
-  },
-  {
-    q:"Кто помог Золушке попасть на бал?",
-    img:"https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
-    options:["Мачеха","Фея","Король","Сестра"],
+    q:"Сколько сторон у треугольника?",
+    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
+    options:["2","3","4","5"],
     correct:1,
-    fact:"✨ Добрая фея превратила тыкву в карету, а мышей — в лошадей."
+    fact:"📐 У треугольника 3 стороны и 3 угла."
   },
   {
-    q:"Из чего был сделан Буратино?",
-    img:"https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800",
-    options:["Из дерева","Из глины","Из соломы","Из снега"],
-    correct:0,
-    fact:"🪵 Папа Карло вырезал Буратино из полена."
+    q:"Сколько будет 9 + 9?",
+    img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
+    options:["16","17","18","19"],
+    correct:2,
+    fact:"📚 9 + 9 = 18. Это почти 10 + 10, но на 2 меньше."
   },
   {
-    q:"Кто жил в избушке на курьих ножках?",
-    img:"https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=800",
-    options:["Кощей","Баба-Яга","Леший","Водяной"],
+    q:"У Пети 10 яблок. Он отдал 3. Сколько осталось?",
+    img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=800",
+    options:["6","7","8","9"],
     correct:1,
-    fact:"🧙‍♀️ Баба-Яга — волшебная старуха из русских народных сказок."
+    fact:"🍎 10 − 3 = 7. Задача на вычитание."
   },
   {
-    q:"Что нашла Муха-Цокотуха, когда шла по полю?",
-    img:"https://images.unsplash.com/photo-1587731556938-38755b4803a6?w=800",
-    options:["Цветок","Денежку","Гриб","Ягоду"],
-    correct:1,
-    fact:"💰 Муха-Цокотуха нашла денежку и купила на неё самовар."
+    q:"Сколько будет 20 − 4 − 4?",
+    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
+    options:["10","11","12","13"],
+    correct:2,
+    fact:"📚 20 − 4 = 16, потом 16 − 4 = 12."
   },
   {
-    q:"Кого спасла Герда в сказке «Снежная королева»?",
-    img:"https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=800",
-    options:["Брата","Сестру","Подругу","Собаку"],
+    q:"Сколько углов у квадрата?",
+    img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
+    options:["3","4","5","6"],
     correct:1,
-    fact:"❄️ Герда отправилась в долгий путь, чтобы спасти своего брата Кая."
+    fact:"⬜ У квадрата 4 угла и 4 равные стороны."
+  },
+  {
+    q:"Сколько будет 6 × 2?",
+    img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
+    options:["8","10","12","14"],
+    correct:2,
+    fact:"✖️ 6 × 2 = 12. Это 6 + 6."
+  },
+  {
+    q:"Какое число идёт после 19?",
+    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
+    options:["18","20","21","22"],
+    correct:1,
+    fact:"🔢 После 19 идёт 20. Числа идут по порядку."
   }
 ];
 
@@ -626,7 +623,6 @@ function chooseAnswer(choice, btn) {
     document.getElementById('answerMsg').textContent = '❌ Неправильно';
   }
 
-  // Показываем факт
   if (s.fact) {
     document.getElementById('factBox').innerHTML =
       `<div class="fact"><span class="fact-icon">💡</span>${s.fact}</div>`;
@@ -725,4 +721,15 @@ function checkCodes() {
   box.innerHTML = html;
 }
 
-function clearResults
+function clearResults() {
+  document.getElementById('codesInput').value = '';
+  document.getElementById('checkResults').innerHTML = '';
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+</script>
+</body>
+</html>
