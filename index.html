@@ -6,21 +6,14 @@
 <title>Космос 4 · Математика</title>
 <style>
   :root {
-    --bg-deep:#03060f;
-    --bg-mid:#0a1228;
+    --bg-deep:#03060f; --bg-mid:#0a1228;
     --card-bg:rgba(15,25,50,.65);
     --card-border:rgba(100,180,255,.15);
-    --text:#eaf0ff;
-    --muted:#6b7a9e;
-    --cyan:#38e0ff;
-    --blue:#4f7fff;
-    --gold:#ffcc4d;
-    --pink:#ff5c9e;
-    --ok:#3ddc84;
-    --bad:#ff5c5c;
+    --text:#eaf0ff; --muted:#6b7a9e;
+    --cyan:#38e0ff; --blue:#4f7fff; --gold:#ffcc4d; --pink:#ff5c9e;
+    --ok:#3ddc84; --bad:#ff5c5c;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
-  html, body { height:100%; }
   body {
     min-height:100vh;
     background:
@@ -28,10 +21,9 @@
       radial-gradient(ellipse at 85% 100%, rgba(56,224,255,.2) 0%, transparent 45%),
       radial-gradient(ellipse at 50% 50%, var(--bg-mid) 0%, var(--bg-deep) 75%);
     color:var(--text);
-    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    font-family:'Segoe UI',system-ui,sans-serif;
     display:flex; align-items:center; justify-content:center;
     padding:20px; position:relative; overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
   }
   body::before {
     content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
@@ -48,45 +40,24 @@
       radial-gradient(2px 2px at 68% 62%, #fff, transparent),
       radial-gradient(1px 1px at 82% 82%, #a8d0ff, transparent),
       radial-gradient(1.5px 1.5px at 95% 40%, #fff, transparent),
-      radial-gradient(1px 1px at 5% 88%, #fff, transparent),
-      radial-gradient(1px 1px at 42% 35%, #fff, transparent),
-      radial-gradient(1.5px 1.5px at 78% 92%, #cfe8ff, transparent);
+      radial-gradient(1px 1px at 5% 88%, #fff, transparent);
     animation:twinkle 6s ease-in-out infinite alternate;
     opacity:.65;
   }
-  @keyframes twinkle {
-    0% { opacity:.4; }
-    50% { opacity:.8; }
-    100% { opacity:.5; }
-  }
-  body::after {
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:
-      radial-gradient(ellipse 40% 25% at 20% 30%, rgba(79,127,255,.15), transparent),
-      radial-gradient(ellipse 35% 20% at 80% 70%, rgba(255,92,158,.1), transparent);
-    filter:blur(40px);
-    animation:nebula 20s ease-in-out infinite alternate;
-  }
-  @keyframes nebula {
-    from { transform:scale(1) rotate(0deg); }
-    to   { transform:scale(1.15) rotate(5deg); }
-  }
+  @keyframes twinkle { 0%,100%{opacity:.4} 50%{opacity:.8} }
   .wrap { width:100%; max-width:680px; position:relative; z-index:1; }
   .card {
     background:var(--card-bg);
     backdrop-filter:blur(20px) saturate(150%);
     -webkit-backdrop-filter:blur(20px) saturate(150%);
     border:1px solid var(--card-border);
-    border-radius:28px;
-    padding:38px 32px;
+    border-radius:28px; padding:38px 32px;
     box-shadow:
       0 30px 80px rgba(0,0,0,.7),
       0 0 80px rgba(79,127,255,.08),
-      inset 0 1px 0 rgba(255,255,255,.06),
-      inset 0 -1px 0 rgba(0,0,0,.3);
+      inset 0 1px 0 rgba(255,255,255,.06);
     animation:cardIn .6s cubic-bezier(.2,.8,.2,1);
-    position:relative;
-    overflow:hidden;
+    position:relative; overflow:hidden;
   }
   .card::before {
     content:''; position:absolute; top:0; left:0; right:0; height:1px;
@@ -104,31 +75,25 @@
     background:radial-gradient(circle at 30% 30%,
                rgba(56,224,255,.3), rgba(79,127,255,.15));
     border:1.5px solid rgba(56,224,255,.3);
-    box-shadow:
-      0 0 30px rgba(56,224,255,.4),
-      inset 0 0 20px rgba(79,127,255,.2);
+    box-shadow:0 0 30px rgba(56,224,255,.4),
+               inset 0 0 20px rgba(79,127,255,.2);
     animation:emblemPulse 3s ease-in-out infinite;
     font-size:32px;
   }
   @keyframes emblemPulse {
-    0%,100% {
-      box-shadow:0 0 30px rgba(56,224,255,.35),
-                 inset 0 0 20px rgba(79,127,255,.15);
-    }
-    50% {
-      box-shadow:0 0 50px rgba(56,224,255,.6),
-                 inset 0 0 30px rgba(79,127,255,.3);
-    }
+    0%,100% { box-shadow:0 0 30px rgba(56,224,255,.35),
+                          inset 0 0 20px rgba(79,127,255,.15); }
+    50%     { box-shadow:0 0 50px rgba(56,224,255,.6),
+                          inset 0 0 30px rgba(79,127,255,.3); }
   }
   h1 {
     font-size:28px; font-weight:800; letter-spacing:5px;
     text-align:center; margin-bottom:8px;
-    background:linear-gradient(135deg, var(--cyan) 0%, var(--blue) 50%, var(--gold) 100%);
+    background:linear-gradient(135deg, var(--cyan), var(--blue), var(--gold));
     background-size:200% auto;
     -webkit-background-clip:text; background-clip:text;
     -webkit-text-fill-color:transparent;
     animation:shine 5s linear infinite;
-    text-shadow:0 0 40px rgba(56,224,255,.2);
   }
   @keyframes shine { to { background-position:200% center; } }
   .sub {
@@ -141,74 +106,48 @@
     border-radius:16px;
     border:1.5px solid rgba(100,180,255,.15);
     background:rgba(3,6,15,.7);
-    color:var(--text);
-    margin-bottom:14px;
-    transition:all .3s cubic-bezier(.2,.8,.2,1);
-    font-family:inherit;
+    color:var(--text); margin-bottom:14px;
+    transition:.3s; font-family:inherit;
     box-shadow:inset 0 2px 6px rgba(0,0,0,.3);
   }
   input:focus, textarea:focus {
-    outline:none;
-    border-color:var(--cyan);
+    outline:none; border-color:var(--cyan);
     background:rgba(3,6,15,.9);
-    box-shadow:
-      0 0 0 4px rgba(56,224,255,.1),
-      0 0 30px rgba(56,224,255,.2),
-      inset 0 2px 6px rgba(0,0,0,.3);
-    transform:translateY(-1px);
+    box-shadow:0 0 0 4px rgba(56,224,255,.1),
+               0 0 30px rgba(56,224,255,.2);
   }
   input::placeholder, textarea::placeholder { color:#4a5878; }
-  textarea {
-    font-family:monospace; font-size:14px;
-    resize:vertical; min-height:100px;
-  }
+  textarea { font-family:monospace; font-size:14px;
+             resize:vertical; min-height:100px; }
   button {
     width:100%; padding:15px; font-size:15px; font-weight:700;
     border-radius:16px; border:none; cursor:pointer;
     letter-spacing:1px; margin-bottom:10px;
-    transition:all .3s cubic-bezier(.2,.8,.2,1);
-    font-family:inherit;
+    transition:.3s; font-family:inherit;
     position:relative; overflow:hidden;
   }
-  button::before {
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
-    transform:translateX(-100%);
-    transition:transform .6s;
-  }
-  button:hover::before { transform:translateX(100%); }
   button.main {
     background:linear-gradient(135deg, var(--blue), var(--cyan));
-    color:#03060f;
-    box-shadow:
-      0 8px 30px rgba(79,127,255,.4),
-      inset 0 1px 0 rgba(255,255,255,.3);
-    font-weight:800;
+    color:#03060f; font-weight:800;
+    box-shadow:0 8px 30px rgba(79,127,255,.4),
+               inset 0 1px 0 rgba(255,255,255,.3);
   }
   button.main:hover {
     transform:translateY(-2px);
-    box-shadow:
-      0 12px 40px rgba(79,127,255,.6),
-      0 0 60px rgba(56,224,255,.4),
-      inset 0 1px 0 rgba(255,255,255,.4);
+    box-shadow:0 12px 40px rgba(79,127,255,.6),
+               0 0 60px rgba(56,224,255,.4);
   }
-  button.main:active { transform:translateY(0); }
   button.admin-btn {
     background:linear-gradient(135deg, rgba(255,204,77,.15), rgba(255,92,158,.15));
     border:1.5px solid rgba(255,204,77,.4);
     color:var(--gold);
-    box-shadow:
-      0 0 24px rgba(255,204,77,.2),
-      inset 0 0 20px rgba(255,204,77,.05);
+    box-shadow:0 0 24px rgba(255,204,77,.2);
   }
   button.admin-btn:hover {
     background:linear-gradient(135deg, rgba(255,204,77,.25), rgba(255,92,158,.25));
-    border-color:var(--gold);
-    box-shadow:
-      0 0 40px rgba(255,204,77,.4),
-      inset 0 0 30px rgba(255,204,77,.1);
+    border-color:var(--gold); color:#fff;
+    box-shadow:0 0 40px rgba(255,204,77,.4);
     transform:translateY(-1px);
-    color:#fff;
   }
   button.sec {
     background:transparent; color:var(--text);
@@ -219,34 +158,48 @@
     background:rgba(56,224,255,.06);
     color:var(--cyan);
   }
-  button:disabled {
-    opacity:.4; cursor:not-allowed; transform:none !important;
-  }
-  button:disabled::before { display:none; }
-  .msg {
-    min-height:22px; margin-top:12px; text-align:center;
-    font-size:14px; color:var(--bad); font-weight:500;
-  }
+  button:disabled { opacity:.4; cursor:not-allowed; transform:none !important; }
+  .msg { min-height:22px; margin-top:12px; text-align:center;
+         font-size:14px; color:var(--bad); font-weight:500; }
   .hidden { display:none !important; }
-  .q-img {
-    width:100%; max-height:300px; object-fit:cover;
-    border-radius:20px; margin-bottom:22px;
-    border:1px solid rgba(100,180,255,.2);
-    box-shadow:
-      0 15px 40px rgba(0,0,0,.6),
-      0 0 40px rgba(79,127,255,.15);
-    animation:imgIn .5s cubic-bezier(.2,.8,.2,1);
+
+  /* выбор класса */
+  .grade-grid { display:grid; grid-template-columns:repeat(4,1fr);
+                gap:10px; margin-bottom:20px; }
+  .grade-btn {
+    padding:16px 10px; border-radius:14px;
+    border:1.5px solid rgba(100,180,255,.2);
+    background:rgba(10,18,40,.6);
+    color:var(--text); font-size:18px; font-weight:800;
+    cursor:pointer; transition:.25s;
+    text-align:center;
   }
+  .grade-btn:hover {
+    border-color:var(--cyan);
+    background:rgba(56,224,255,.1);
+    transform:translateY(-2px);
+  }
+  .grade-btn.selected {
+    border-color:var(--cyan);
+    background:linear-gradient(135deg, rgba(79,127,255,.3), rgba(56,224,255,.3));
+    box-shadow:0 0 30px rgba(56,224,255,.4);
+    transform:scale(1.05);
+  }
+  .grade-label { text-align:center; color:var(--muted);
+                 font-size:12px; text-transform:uppercase;
+                 letter-spacing:2px; margin-bottom:12px; }
+
+  .q-img { width:100%; max-height:300px; object-fit:cover;
+           border-radius:20px; margin-bottom:22px;
+           border:1px solid rgba(100,180,255,.2);
+           box-shadow:0 15px 40px rgba(0,0,0,.6);
+           animation:imgIn .5s ease-out; }
   @keyframes imgIn {
-    from { opacity:0; transform:scale(.95) translateY(10px); }
-    to   { opacity:1; transform:scale(1) translateY(0); }
+    from { opacity:0; transform:scale(.95); }
+    to   { opacity:1; transform:scale(1); }
   }
-  .q-text {
-    font-size:22px; font-weight:700; text-align:center;
-    margin-bottom:24px; line-height:1.4;
-    color:#fff;
-    text-shadow:0 2px 10px rgba(0,0,0,.4);
-  }
+  .q-text { font-size:22px; font-weight:700; text-align:center;
+            margin-bottom:24px; line-height:1.4; color:#fff; }
   .options { display:grid; gap:12px; }
   .opt {
     padding:16px 20px; border-radius:16px;
@@ -254,15 +207,13 @@
     background:rgba(10,18,40,.6);
     color:var(--text); font-size:15px; text-align:left;
     display:flex; align-items:center; gap:16px;
-    cursor:pointer; transition:all .25s cubic-bezier(.2,.8,.2,1);
-    width:100%; font-weight:500;
-    backdrop-filter:blur(8px);
+    cursor:pointer; transition:.25s; width:100%;
+    font-weight:500;
   }
   .opt:hover {
     border-color:var(--cyan);
     background:rgba(56,224,255,.08);
     transform:translateX(4px);
-    box-shadow:0 8px 24px rgba(56,224,255,.2);
   }
   .opt .letter {
     width:34px; height:34px; border-radius:50%;
@@ -270,82 +221,47 @@
     display:flex; align-items:center; justify-content:center;
     font-weight:800; font-size:14px; flex-shrink:0;
     color:#03060f;
-    box-shadow:
-      0 4px 12px rgba(79,127,255,.4),
-      inset 0 1px 0 rgba(255,255,255,.4);
   }
-  .opt.correct {
-    border-color:var(--ok);
-    background:rgba(61,220,132,.12);
-    box-shadow:0 0 30px rgba(61,220,132,.25);
-  }
-  .opt.correct .letter {
-    background:linear-gradient(135deg, #1a8a4a, var(--ok));
-  }
-  .opt.wrong {
-    border-color:var(--bad);
-    background:rgba(255,92,92,.12);
-    box-shadow:0 0 30px rgba(255,92,92,.25);
-  }
-  .opt.wrong .letter {
-    background:linear-gradient(135deg, #a03030, var(--bad));
-  }
-  .progress {
-    display:flex; justify-content:center; gap:8px; margin-bottom:26px;
-    flex-wrap:wrap;
-  }
-  .dot {
-    width:10px; height:10px; border-radius:50%;
-    background:rgba(100,180,255,.15);
-    transition:all .4s cubic-bezier(.2,.8,.2,1);
-  }
-  .dot.active {
-    background:var(--cyan);
-    box-shadow:0 0 20px var(--cyan), 0 0 40px rgba(56,224,255,.4);
-    transform:scale(1.4);
-  }
-  .dot.done {
-    background:var(--blue);
-    box-shadow:0 0 10px rgba(79,127,255,.5);
-  }
-  .score {
-    font-size:72px; font-weight:900; text-align:center;
-    margin:20px 0; letter-spacing:3px;
-    background:linear-gradient(135deg, var(--cyan), var(--gold), var(--pink));
-    background-size:200% auto;
-    -webkit-background-clip:text; background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation:shine 4s linear infinite;
-    filter:drop-shadow(0 0 30px rgba(56,224,255,.3));
-  }
-  .score small {
-    font-size:26px; color:var(--muted);
-    -webkit-text-fill-color:var(--muted);
-    font-weight:600;
-  }
+  .opt.correct { border-color:var(--ok); background:rgba(61,220,132,.12); }
+  .opt.correct .letter { background:linear-gradient(135deg,#1a8a4a,var(--ok)); }
+  .opt.wrong   { border-color:var(--bad); background:rgba(255,92,92,.12); }
+  .opt.wrong .letter { background:linear-gradient(135deg,#a03030,var(--bad)); }
+
+  .progress { display:flex; justify-content:center; gap:8px;
+              margin-bottom:26px; flex-wrap:wrap; }
+  .dot { width:10px; height:10px; border-radius:50%;
+         background:rgba(100,180,255,.15); transition:.4s; }
+  .dot.active { background:var(--cyan);
+                box-shadow:0 0 20px var(--cyan); transform:scale(1.4); }
+  .dot.done { background:var(--blue); }
+
+  .score { font-size:72px; font-weight:900; text-align:center;
+           margin:20px 0;
+           background:linear-gradient(135deg, var(--cyan), var(--gold), var(--pink));
+           background-size:200% auto;
+           -webkit-background-clip:text; background-clip:text;
+           -webkit-text-fill-color:transparent;
+           animation:shine 4s linear infinite; }
+  .score small { font-size:26px; color:var(--muted);
+                 -webkit-text-fill-color:var(--muted); }
+
   .report-code {
     font-family:'Courier New',monospace;
-    font-size:24px; font-weight:800;
-    text-align:center; letter-spacing:4px; padding:22px;
+    font-size:14px; font-weight:700;
+    text-align:center; letter-spacing:1px; padding:18px;
     background:rgba(3,6,15,.8);
     border:2px dashed rgba(100,180,255,.3);
     border-radius:16px;
     margin:18px 0; word-break:break-all; cursor:pointer;
-    transition:all .3s;
-    color:var(--cyan);
-    text-shadow:0 0 20px rgba(56,224,255,.4);
+    transition:.3s; color:var(--cyan);
   }
   .report-code:hover {
-    border-color:var(--cyan);
-    border-style:solid;
-    background:rgba(56,224,255,.08);
+    border-color:var(--cyan); border-style:solid;
     box-shadow:0 0 30px rgba(56,224,255,.3);
-    transform:scale(1.02);
   }
-  .report-hint {
-    text-align:center; color:var(--muted);
-    font-size:13px; margin-top:6px;
-  }
+  .report-hint { text-align:center; color:var(--muted);
+                 font-size:13px; margin-top:6px; }
+
   .results-table {
     width:100%; border-collapse:separate;
     border-spacing:0; margin-top:20px;
@@ -354,12 +270,10 @@
     border:1px solid rgba(100,180,255,.1);
   }
   .results-table th {
-    font-size:11px; text-transform:uppercase;
-    color:var(--muted); letter-spacing:2px;
+    font-size:11px; text-transform:uppercase; color:var(--muted);
     text-align:left; padding:14px 12px;
     background:rgba(79,127,255,.08);
     border-bottom:1px solid rgba(100,180,255,.15);
-    font-weight:700;
   }
   .results-table td {
     padding:14px 12px;
@@ -367,32 +281,45 @@
     font-size:14px;
   }
   .results-table tr:last-child td { border-bottom:none; }
-  .results-table tbody tr { transition:background .2s; }
-  .results-table tbody tr:hover td {
-    background:rgba(56,224,255,.05);
-  }
-  .empty {
-    text-align:center; color:var(--muted);
-    padding:40px 0; font-size:14px;
-  }
-  .top1 {
-    color:var(--gold); font-weight:800;
-    text-shadow:0 0 15px rgba(255,204,77,.6);
-  }
+  .empty { text-align:center; color:var(--muted);
+           padding:40px 0; font-size:14px; }
+  .top1 { color:var(--gold); font-weight:800; }
+
   .fact {
     margin-top:18px; padding:16px 20px;
     background:rgba(56,224,255,.06);
     border:1px solid rgba(56,224,255,.25);
     border-radius:14px;
-    color:var(--text); font-size:14px; line-height:1.6;
+    font-size:14px; line-height:1.6;
     animation:factIn .4s ease-out;
   }
-  .fact .fact-icon { margin-right:8px; }
-  .fact strong { color:var(--cyan); }
   @keyframes factIn {
     from { opacity:0; transform:translateY(10px); }
     to   { opacity:1; transform:translateY(0); }
   }
+
+  /* детальный отчёт */
+  .detail-card {
+    margin-top:16px; padding:16px;
+    background:rgba(3,6,15,.5);
+    border:1px solid rgba(100,180,255,.15);
+    border-radius:14px;
+  }
+  .detail-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:12px;
+  }
+  .detail-name { font-weight:800; font-size:16px; color:var(--cyan); }
+  .detail-score { font-weight:800; color:var(--gold); }
+  .detail-q {
+    padding:8px 0; border-bottom:1px solid rgba(100,180,255,.08);
+    font-size:13px; line-height:1.5;
+  }
+  .detail-q:last-child { border-bottom:none; }
+  .detail-q .q-title { color:#c8d0ff; margin-bottom:4px; }
+  .detail-q .q-answer { color:var(--muted); }
+  .detail-q .q-answer.ok { color:var(--ok); }
+  .detail-q .q-answer.bad { color:var(--bad); }
 </style>
 </head>
 <body>
@@ -402,7 +329,16 @@
   <div id="screen-login" class="card">
     <div class="emblem">🧮</div>
     <h1>КОСМОС 4</h1>
-    <p class="sub">Математика · 10 вопросов</p>
+    <p class="sub">Математика · ОГЭ/ЕГЭ стиль</p>
+
+    <p class="grade-label">Выбери свой класс</p>
+    <div class="grade-grid" id="gradeGrid">
+      <button class="grade-btn" data-grade="1" onclick="selectGrade(1)">1</button>
+      <button class="grade-btn" data-grade="2" onclick="selectGrade(2)">2</button>
+      <button class="grade-btn" data-grade="3" onclick="selectGrade(3)">3</button>
+      <button class="grade-btn" data-grade="4" onclick="selectGrade(4)">4</button>
+    </div>
+
     <input id="nameInput" placeholder="Твоё имя" maxlength="20">
     <button class="main" onclick="startQuiz()">🎮 Начать викторину</button>
     <button class="admin-btn" onclick="showAdminLogin()">
@@ -455,7 +391,7 @@
     <h1>РЕЗУЛЬТАТЫ</h1>
     <p class="sub">Вставь коды от участников</p>
     <textarea id="codesInput"
-      placeholder="Вставляй коды с новой строки, например:&#10;Аня|АК7Х2|8/10&#10;Боря|БР9М1|6/10"></textarea>
+      placeholder="Вставляй коды с новой строки — каждый на отдельной строке"></textarea>
     <button class="main" onclick="checkCodes()">📊 Проверить</button>
     <button class="sec" onclick="clearResults()">🗑 Очистить</button>
     <button class="sec" onclick="showScreen('screen-login')">← Назад</button>
@@ -467,85 +403,65 @@
 <script>
 const ADMIN_PASSWORD = "vodadmin";
 
-/* ===== МАТЕМАТИКА В СТИЛЕ ОГЭ/ЕГЭ (1–2 класс) ===== */
-const SLIDES = [
-  {
-    q:"Сколько будет 7 + 5?",
-    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
-    options:["10","11","12","13"],
-    correct:2,
-    fact:"📚 7 + 5 = 12. Сначала прибавляем 3 до 10, потом ещё 2."
-  },
-  {
-    q:"Сколько будет 15 − 8?",
-    img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
-    options:["6","7","8","9"],
-    correct:1,
-    fact:"📚 15 − 8 = 7. Можно отнять 5 до 10, потом ещё 3."
-  },
-  {
-    q:"Сколько будет 4 × 3?",
-    img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-    options:["7","10","12","14"],
-    correct:2,
-    fact:"✖️ 4 × 3 = 12. Это 4 + 4 + 4."
-  },
-  {
-    q:"Сколько сторон у треугольника?",
-    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
-    options:["2","3","4","5"],
-    correct:1,
-    fact:"📐 У треугольника 3 стороны и 3 угла."
-  },
-  {
-    q:"Сколько будет 9 + 9?",
-    img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
-    options:["16","17","18","19"],
-    correct:2,
-    fact:"📚 9 + 9 = 18. Это почти 10 + 10, но на 2 меньше."
-  },
-  {
-    q:"У Пети 10 яблок. Он отдал 3. Сколько осталось?",
-    img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=800",
-    options:["6","7","8","9"],
-    correct:1,
-    fact:"🍎 10 − 3 = 7. Задача на вычитание."
-  },
-  {
-    q:"Сколько будет 20 − 4 − 4?",
-    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
-    options:["10","11","12","13"],
-    correct:2,
-    fact:"📚 20 − 4 = 16, потом 16 − 4 = 12."
-  },
-  {
-    q:"Сколько углов у квадрата?",
-    img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
-    options:["3","4","5","6"],
-    correct:1,
-    fact:"⬜ У квадрата 4 угла и 4 равные стороны."
-  },
-  {
-    q:"Сколько будет 6 × 2?",
-    img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800",
-    options:["8","10","12","14"],
-    correct:2,
-    fact:"✖️ 6 × 2 = 12. Это 6 + 6."
-  },
-  {
-    q:"Какое число идёт после 19?",
-    img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800",
-    options:["18","20","21","22"],
-    correct:1,
-    fact:"🔢 После 19 идёт 20. Числа идут по порядку."
-  }
-];
+/* ===== ВОПРОСЫ ПО КЛАССАМ ===== */
+const QUESTIONS = {
+  1: [
+    { q:"Сколько будет 3 + 4?", options:["5","6","7","8"], correct:2,
+      fact:"3 + 4 = 7", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Сколько будет 10 − 6?", options:["3","4","5","6"], correct:1,
+      fact:"10 − 6 = 4", img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800" },
+    { q:"Сколько сторон у квадрата?", options:["3","4","5","6"], correct:1,
+      fact:"У квадрата 4 стороны", img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" },
+    { q:"Какое число больше: 8 или 5?", options:["8","5","равны","не знаю"], correct:0,
+      fact:"8 больше 5", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Сколько будет 2 + 2 + 2?", options:["4","5","6","7"], correct:2,
+      fact:"2+2+2 = 6", img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800" }
+  ],
+  2: [
+    { q:"Сколько будет 7 + 5?", options:["10","11","12","13"], correct:2,
+      fact:"7 + 5 = 12. Сначала до 10 (+3), потом ещё +2", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Сколько будет 15 − 8?", options:["6","7","8","9"], correct:1,
+      fact:"15 − 8 = 7", img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800" },
+    { q:"Сколько будет 4 × 3?", options:["7","10","12","14"], correct:2,
+      fact:"4 × 3 = 12. Это 4+4+4", img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" },
+    { q:"У Пети 10 яблок. Он отдал 3. Сколько осталось?", options:["6","7","8","9"], correct:1,
+      fact:"10 − 3 = 7", img:"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=800" },
+    { q:"Сколько углов у квадрата?", options:["3","4","5","6"], correct:1,
+      fact:"У квадрата 4 угла", img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" }
+  ],
+  3: [
+    { q:"Сколько будет 25 + 17?", options:["32","40","42","44"], correct:2,
+      fact:"25 + 17 = 42. 25+15=40, +2=42", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Сколько будет 8 × 7?", options:["48","54","56","64"], correct:2,
+      fact:"8 × 7 = 56. Это 8×5 + 8×2 = 40+16", img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800" },
+    { q:"Сколько будет 100 − 37?", options:["53","63","67","73"], correct:1,
+      fact:"100 − 37 = 63", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Периметр квадрата со стороной 5 см?", options:["10","15","20","25"], correct:2,
+      fact:"P = 4 × 5 = 20 см", img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" },
+    { q:"Сколько минут в 2 часах?", options:["60","90","120","150"], correct:2,
+      fact:"1 час = 60 минут, 2 часа = 120 минут", img:"https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800" }
+  ],
+  4: [
+    { q:"Сколько будет 144 ÷ 12?", options:["10","11","12","13"], correct:2,
+      fact:"144 ÷ 12 = 12. Проверка: 12 × 12 = 144", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Сколько будет 25 × 4?", options:["75","90","100","125"], correct:2,
+      fact:"25 × 4 = 100. Это 100", img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=800" },
+    { q:"Площадь прямоугольника 6 × 8?", options:["14","28","42","48"], correct:3,
+      fact:"S = 6 × 8 = 48", img:"https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800" },
+    { q:"Сколько будет 1000 − 250?", options:["650","700","750","800"], correct:2,
+      fact:"1000 − 250 = 750", img:"https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800" },
+    { q:"Сколько секунд в 3 минутах?", options:["120","150","180","210"], correct:2,
+      fact:"1 мин = 60 сек, 3 мин = 180 сек", img:"https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800" }
+  ]
+};
 
 let playerName = "";
+let playerGrade = 0;
 let mySlides = [];
 let idx = 0;
 let score = 0;
 let answered = false;
+let myAnswers = [];   // ответы: [{q, chosen, correct, isRight}]
 
 function showScreen(id) {
   document.querySelectorAll('.wrap > div')
@@ -562,12 +478,26 @@ function shuffle(arr) {
   return a;
 }
 
+function selectGrade(g) {
+  playerGrade = g;
+  document.querySelectorAll('.grade-btn').forEach(b => {
+    b.classList.toggle('selected', +b.dataset.grade === g);
+  });
+}
+
 function startQuiz() {
   const name = document.getElementById('nameInput').value.trim();
-  if (!name) { document.getElementById('loginMsg').textContent='Введи имя'; return; }
+  if (!playerGrade) {
+    document.getElementById('loginMsg').textContent = 'Выбери класс';
+    return;
+  }
+  if (!name) {
+    document.getElementById('loginMsg').textContent = 'Введи имя';
+    return;
+  }
   playerName = name;
-  mySlides = shuffle(SLIDES);
-  idx = 0; score = 0;
+  mySlides = shuffle(QUESTIONS[playerGrade]);
+  idx = 0; score = 0; myAnswers = [];
   showScreen('screen-question');
   renderQuestion();
 }
@@ -612,6 +542,13 @@ function chooseAnswer(choice, btn) {
   const correct = choice === s.correct;
   document.querySelectorAll('#options .opt').forEach(b=>b.disabled=true);
 
+  myAnswers.push({
+    q: s.q,
+    chosenText: s.options[choice],
+    correctText: s.options[s.correct],
+    isRight: correct
+  });
+
   if (correct) {
     score++;
     btn.classList.add('correct');
@@ -625,23 +562,24 @@ function chooseAnswer(choice, btn) {
 
   if (s.fact) {
     document.getElementById('factBox').innerHTML =
-      `<div class="fact"><span class="fact-icon">💡</span>${s.fact}</div>`;
+      `<div class="fact">💡 ${s.fact}</div>`;
   }
 
   setTimeout(()=>{ idx++; renderQuestion(); }, 2200);
 }
 
+/* Код-отчёт: имя|класс|счёт|base64(ответы) */
 function makeCode() {
-  const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let rnd = "";
-  for (let i = 0; i < 4; i++)
-    rnd += ALPH[Math.floor(Math.random()*ALPH.length)];
-  return `${playerName}|${rnd}|${score}/${mySlides.length}`;
+  const payload = JSON.stringify(myAnswers);
+  // компактное base64 (UTF-8)
+  const b64 = btoa(unescape(encodeURIComponent(payload)));
+  return `${playerName}|${playerGrade}|${score}/${mySlides.length}|${b64}`;
 }
 
 function finish() {
   showScreen('screen-result');
-  document.getElementById('resultText').textContent = `${playerName}, твой результат:`;
+  document.getElementById('resultText').textContent =
+    `${playerName} (${playerGrade} класс), твой результат:`;
   document.getElementById('resultScore').innerHTML =
     `${score}<small> / ${mySlides.length}</small>`;
   const code = makeCode();
@@ -680,56 +618,31 @@ function checkAdminPass() {
   }
 }
 
+/* ===== РАЗБОР КОДОВ ===== */
 function checkCodes() {
   const raw = document.getElementById('codesInput').value;
   const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
   const rows = [];
+
   lines.forEach(line => {
     const parts = line.split('|');
-    if (parts.length < 3) return;
+    if (parts.length < 4) return;
     const name = parts[0].trim();
-    const code = parts[1].trim();
-    const m = parts[2].trim().match(/^(\d+)\s*\/\s*(\d+)$/);
+    const grade = parts[1].trim();
+    const scoreStr = parts[2].trim();
+    const b64 = parts[3].trim();
+    const m = scoreStr.match(/^(\d+)\s*\/\s*(\d+)$/);
     if (!m) return;
-    rows.push({ name, code, sc: parseInt(m[1],10), total: parseInt(m[2],10) });
-  });
-  const box = document.getElementById('checkResults');
-  if (!rows.length) {
-    box.innerHTML = '<div class="empty">Нет валидных кодов. Формат: Имя|КОД|8/10</div>';
-    return;
-  }
-  rows.sort((a,b)=> b.sc - a.sc);
-  let html = '<table class="results-table"><thead><tr>' +
-             '<th>#</th><th>Имя</th><th>Код</th><th>Результат</th>' +
-             '</tr></thead><tbody>';
-  rows.forEach((r,i) => {
-    const cls = i === 0 ? 'top1' : '';
-    const medal = i === 0 ? '🥇 ' : (i === 1 ? '🥈 ' : (i === 2 ? '🥉 ' : ''));
-    html += `<tr>
-      <td>${i+1}</td>
-      <td class="${cls}">${medal}${escapeHtml(r.name)}</td>
-      <td style="color:var(--muted); font-family:monospace;">${escapeHtml(r.code)}</td>
-      <td class="${cls}">${r.sc} / ${r.total}</td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  const avg = rows.reduce((s,r)=>s+r.sc,0) / rows.length;
-  const best = Math.max(...rows.map(r=>r.sc));
-  html += `<div class="msg" style="margin-top:20px; color:var(--cyan);">
-    Участников: ${rows.length} · Средний балл: ${avg.toFixed(1)} · Лучший: ${best}
-  </div>`;
-  box.innerHTML = html;
-}
 
-function clearResults() {
-  document.getElementById('codesInput').value = '';
-  document.getElementById('checkResults').innerHTML = '';
-}
+    let answers = [];
+    try {
+      answers = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    } catch(e) { return; }
 
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, c =>
-    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-</script>
-</body>
-</html>
+    rows.push({
+      name, grade,
+      sc: parseInt(m[1],10),
+      total: parseInt(m[2],10),
+      answers
+    });
+  });
