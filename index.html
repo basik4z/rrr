@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>scriptobus54 · Сказки</title>
+<title>Космос 4 · Сказки</title>
 <style>
   :root {
     --bg-deep:#03060f;
@@ -33,8 +33,6 @@
     padding:20px; position:relative; overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
-
-  /* звёздное небо */
   body::before {
     content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
     background-image:
@@ -61,7 +59,6 @@
     50% { opacity:.8; }
     100% { opacity:.5; }
   }
-  /* туманность */
   body::after {
     content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
     background:
@@ -74,13 +71,7 @@
     from { transform:scale(1) rotate(0deg); }
     to   { transform:scale(1.15) rotate(5deg); }
   }
-
-  .wrap {
-    width:100%; max-width:680px;
-    position:relative; z-index:1;
-  }
-
-  /* карточка со стеклянным эффектом */
+  .wrap { width:100%; max-width:680px; position:relative; z-index:1; }
   .card {
     background:var(--card-bg);
     backdrop-filter:blur(20px) saturate(150%);
@@ -106,8 +97,6 @@
     from { opacity:0; transform:translateY(30px) scale(.97); }
     to   { opacity:1; transform:translateY(0) scale(1); }
   }
-
-  /* логотип-эмблема */
   .emblem {
     width:72px; height:72px; margin:0 auto 18px;
     display:flex; align-items:center; justify-content:center;
@@ -131,7 +120,6 @@
                  inset 0 0 30px rgba(79,127,255,.3);
     }
   }
-
   h1 {
     font-size:28px; font-weight:800; letter-spacing:5px;
     text-align:center; margin-bottom:8px;
@@ -143,14 +131,11 @@
     text-shadow:0 0 40px rgba(56,224,255,.2);
   }
   @keyframes shine { to { background-position:200% center; } }
-
   .sub {
     color:var(--muted); font-size:12px; letter-spacing:3px;
     text-transform:uppercase; text-align:center;
     margin-bottom:28px; font-weight:500;
   }
-
-  /* поля */
   input, textarea {
     width:100%; padding:15px 18px; font-size:16px;
     border-radius:16px;
@@ -172,15 +157,11 @@
       inset 0 2px 6px rgba(0,0,0,.3);
     transform:translateY(-1px);
   }
-  input::placeholder, textarea::placeholder {
-    color:#4a5878;
-  }
+  input::placeholder, textarea::placeholder { color:#4a5878; }
   textarea {
     font-family:monospace; font-size:14px;
     resize:vertical; min-height:100px;
   }
-
-  /* кнопки */
   button {
     width:100%; padding:15px; font-size:15px; font-weight:700;
     border-radius:16px; border:none; cursor:pointer;
@@ -195,10 +176,7 @@
     transform:translateX(-100%);
     transition:transform .6s;
   }
-  button:hover::before {
-    transform:translateX(100%);
-  }
-
+  button:hover::before { transform:translateX(100%); }
   button.main {
     background:linear-gradient(135deg, var(--blue), var(--cyan));
     color:#03060f;
@@ -215,7 +193,6 @@
       inset 0 1px 0 rgba(255,255,255,.4);
   }
   button.main:active { transform:translateY(0); }
-
   button.admin-btn {
     background:linear-gradient(135deg, rgba(255,204,77,.15), rgba(255,92,158,.15));
     border:1.5px solid rgba(255,204,77,.4);
@@ -233,7 +210,6 @@
     transform:translateY(-1px);
     color:#fff;
   }
-
   button.sec {
     background:transparent; color:var(--text);
     border:1.5px solid rgba(100,180,255,.2);
@@ -243,19 +219,15 @@
     background:rgba(56,224,255,.06);
     color:var(--cyan);
   }
-
   button:disabled {
     opacity:.4; cursor:not-allowed; transform:none !important;
   }
   button:disabled::before { display:none; }
-
   .msg {
     min-height:22px; margin-top:12px; text-align:center;
     font-size:14px; color:var(--bad); font-weight:500;
   }
   .hidden { display:none !important; }
-
-  /* картинка */
   .q-img {
     width:100%; max-height:300px; object-fit:cover;
     border-radius:20px; margin-bottom:22px;
@@ -269,15 +241,12 @@
     from { opacity:0; transform:scale(.95) translateY(10px); }
     to   { opacity:1; transform:scale(1) translateY(0); }
   }
-
   .q-text {
     font-size:22px; font-weight:700; text-align:center;
     margin-bottom:24px; line-height:1.4;
     color:#fff;
     text-shadow:0 2px 10px rgba(0,0,0,.4);
   }
-
-  /* варианты */
   .options { display:grid; gap:12px; }
   .opt {
     padding:16px 20px; border-radius:16px;
@@ -321,13 +290,12 @@
   .opt.wrong .letter {
     background:linear-gradient(135deg, #a03030, var(--bad));
   }
-
-  /* прогресс */
   .progress {
-    display:flex; justify-content:center; gap:10px; margin-bottom:26px;
+    display:flex; justify-content:center; gap:8px; margin-bottom:26px;
+    flex-wrap:wrap;
   }
   .dot {
-    width:12px; height:12px; border-radius:50%;
+    width:10px; height:10px; border-radius:50%;
     background:rgba(100,180,255,.15);
     transition:all .4s cubic-bezier(.2,.8,.2,1);
   }
@@ -340,8 +308,6 @@
     background:var(--blue);
     box-shadow:0 0 10px rgba(79,127,255,.5);
   }
-
-  /* результат */
   .score {
     font-size:72px; font-weight:900; text-align:center;
     margin:20px 0; letter-spacing:3px;
@@ -357,8 +323,6 @@
     -webkit-text-fill-color:var(--muted);
     font-weight:600;
   }
-
-  /* код-отчёт */
   .report-code {
     font-family:'Courier New',monospace;
     font-size:24px; font-weight:800;
@@ -382,8 +346,6 @@
     text-align:center; color:var(--muted);
     font-size:13px; margin-top:6px;
   }
-
-  /* таблица */
   .results-table {
     width:100%; border-collapse:separate;
     border-spacing:0; margin-top:20px;
@@ -419,6 +381,21 @@
     color:var(--gold); font-weight:800;
     text-shadow:0 0 15px rgba(255,204,77,.6);
   }
+  /* Подсказка / факт */
+  .fact {
+    margin-top:18px; padding:16px 20px;
+    background:rgba(56,224,255,.06);
+    border:1px solid rgba(56,224,255,.25);
+    border-radius:14px;
+    color:var(--text); font-size:14px; line-height:1.6;
+    animation:factIn .4s ease-out;
+  }
+  .fact .fact-icon { margin-right:8px; }
+  .fact strong { color:var(--cyan); }
+  @keyframes factIn {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
 </style>
 </head>
 <body>
@@ -428,7 +405,7 @@
   <div id="screen-login" class="card">
     <div class="emblem">🚀</div>
     <h1>КОСМОС 4</h1>
-    <p class="sub">Викторина по сказкам · 5 вопросов</p>
+    <p class="sub">Викторина по сказкам · 10 вопросов</p>
     <input id="nameInput" placeholder="Твоё имя" maxlength="20">
     <button class="main" onclick="startQuiz()">🎮 Начать викторину</button>
     <button class="admin-btn" onclick="showAdminLogin()">
@@ -455,6 +432,7 @@
     <div class="q-text" id="qText"></div>
     <div class="options" id="options"></div>
     <div id="answerMsg" class="msg"></div>
+    <div id="factBox"></div>
   </div>
 
   <!-- РЕЗУЛЬТАТ -->
@@ -480,7 +458,7 @@
     <h1>РЕЗУЛЬТАТЫ</h1>
     <p class="sub">Вставь коды от участников</p>
     <textarea id="codesInput"
-      placeholder="Вставляй коды с новой строки, например:&#10;Аня|АК7Х2|4/5&#10;Боря|БР9М1|3/5"></textarea>
+      placeholder="Вставляй коды с новой строки, например:&#10;Аня|АК7Х2|8/10&#10;Боря|БР9М1|6/10"></textarea>
     <button class="main" onclick="checkCodes()">📊 Проверить</button>
     <button class="sec" onclick="clearResults()">🗑 Очистить</button>
     <button class="sec" onclick="showScreen('screen-login')">← Назад</button>
@@ -492,28 +470,85 @@
 <script>
 const ADMIN_PASSWORD = "vodadmin";
 
+/* ===== 10 ВОПРОСОВ С ПОДСКАЗКАМИ ===== */
 const SLIDES = [
-  { q:"Кто съел Колобка?",
+  {
+    q:"Кто съел Колобка в конце сказки?",
     img:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800",
-    options:["Волк","Лиса","Медведь","Заяц"], correct:1 },
-  { q:"Кто сломал теремок?",
+    options:["Волк","Лиса","Медведь","Заяц"],
+    correct:1,
+    fact:"🦊 Лиса обхитрила Колобка — попросила сесть ей на нос и съела."
+  },
+  {
+    q:"Кто сломал теремок?",
     img:"https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800",
-    options:["Мышка","Лягушка","Медведь","Лиса"], correct:2 },
-  { q:"Что потеряла Золушка на балу?",
+    options:["Мышка","Лягушка","Медведь","Лиса"],
+    correct:2,
+    fact:"🐻 Медведь был слишком большим для теремка — он и развалил домик."
+  },
+  {
+    q:"Что потеряла Золушка на балу?",
     img:"https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800",
-    options:["Кольцо","Туфельку","Платок","Корону"], correct:1 },
-  { q:"Кто вытянул репку последним?",
+    options:["Кольцо","Туфельку","Платок","Корону"],
+    correct:1,
+    fact:"👠 Хрустальная туфелька помогла принцу найти Золушку."
+  },
+  {
+    q:"Кто вытянул репку последним?",
     img:"https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=800",
-    options:["Дед","Бабка","Внучка","Мышка"], correct:3 },
-  { q:"Какого цвета была шапочка у Красной Шапочки?",
+    options:["Дед","Бабка","Внучка","Мышка"],
+    correct:3,
+    fact:"🐭 Маленькая мышка оказалась решающей — без неё репку не вытянули бы!"
+  },
+  {
+    q:"Какого цвета была шапочка у Красной Шапочки?",
     img:"https://images.unsplash.com/photo-1596707062890-8f4f2a4e0e5a?w=800",
-    options:["Красного","Синего","Зелёного","Жёлтого"], correct:0 }
+    options:["Красного","Синего","Зелёного","Жёлтого"],
+    correct:0,
+    fact:"🎩 Девочку прозвали Красной Шапочкой именно из-за её красного головного убора."
+  },
+  {
+    q:"Кто помог Золушке попасть на бал?",
+    img:"https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
+    options:["Мачеха","Фея","Король","Сестра"],
+    correct:1,
+    fact:"✨ Добрая фея превратила тыкву в карету, а мышей — в лошадей."
+  },
+  {
+    q:"Из чего был сделан Буратино?",
+    img:"https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800",
+    options:["Из дерева","Из глины","Из соломы","Из снега"],
+    correct:0,
+    fact:"🪵 Папа Карло вырезал Буратино из полена."
+  },
+  {
+    q:"Кто жил в избушке на курьих ножках?",
+    img:"https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=800",
+    options:["Кощей","Баба-Яга","Леший","Водяной"],
+    correct:1,
+    fact:"🧙‍♀️ Баба-Яга — волшебная старуха из русских народных сказок."
+  },
+  {
+    q:"Что нашла Муха-Цокотуха, когда шла по полю?",
+    img:"https://images.unsplash.com/photo-1587731556938-38755b4803a6?w=800",
+    options:["Цветок","Денежку","Гриб","Ягоду"],
+    correct:1,
+    fact:"💰 Муха-Цокотуха нашла денежку и купила на неё самовар."
+  },
+  {
+    q:"Кого спасла Герда в сказке «Снежная королева»?",
+    img:"https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=800",
+    options:["Брата","Сестру","Подругу","Собаку"],
+    correct:1,
+    fact:"❄️ Герда отправилась в долгий путь, чтобы спасти своего брата Кая."
+  }
 ];
 
 let playerName = "";
 let mySlides = [];
 let idx = 0;
 let score = 0;
+let answered = false;
 
 function showScreen(id) {
   document.querySelectorAll('.wrap > div')
@@ -543,6 +578,7 @@ function startQuiz() {
 function renderQuestion() {
   if (idx >= mySlides.length) { finish(); return; }
   const s = mySlides[idx];
+  answered = false;
 
   const img = document.getElementById('qImg');
   if (s.img) { img.src = s.img; img.style.display='block'; }
@@ -550,6 +586,7 @@ function renderQuestion() {
 
   document.getElementById('qText').textContent = s.q;
   document.getElementById('answerMsg').textContent = '';
+  document.getElementById('factBox').innerHTML = '';
 
   const opts = document.getElementById('options');
   opts.innerHTML = '';
@@ -571,9 +608,13 @@ function renderQuestion() {
 }
 
 function chooseAnswer(choice, btn) {
+  if (answered) return;
+  answered = true;
+
   const s = mySlides[idx];
   const correct = choice === s.correct;
   document.querySelectorAll('#options .opt').forEach(b=>b.disabled=true);
+
   if (correct) {
     score++;
     btn.classList.add('correct');
@@ -584,7 +625,14 @@ function chooseAnswer(choice, btn) {
       .classList.add('correct');
     document.getElementById('answerMsg').textContent = '❌ Неправильно';
   }
-  setTimeout(()=>{ idx++; renderQuestion(); }, 1200);
+
+  // Показываем факт
+  if (s.fact) {
+    document.getElementById('factBox').innerHTML =
+      `<div class="fact"><span class="fact-icon">💡</span>${s.fact}</div>`;
+  }
+
+  setTimeout(()=>{ idx++; renderQuestion(); }, 2200);
 }
 
 function makeCode() {
@@ -651,7 +699,7 @@ function checkCodes() {
   });
   const box = document.getElementById('checkResults');
   if (!rows.length) {
-    box.innerHTML = '<div class="empty">Нет валидных кодов. Формат: Имя|КОД|4/5</div>';
+    box.innerHTML = '<div class="empty">Нет валидных кодов. Формат: Имя|КОД|8/10</div>';
     return;
   }
   rows.sort((a,b)=> b.sc - a.sc);
@@ -677,15 +725,4 @@ function checkCodes() {
   box.innerHTML = html;
 }
 
-function clearResults() {
-  document.getElementById('codesInput').value = '';
-  document.getElementById('checkResults').innerHTML = '';
-}
-
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, c =>
-    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-</script>
-</body>
-</html>
+function clearResults
