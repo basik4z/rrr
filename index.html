@@ -118,10 +118,20 @@
     <p class="sub">Викторина по сказкам · 5 вопросов</p>
     <input id="nameInput" placeholder="Твоё имя" maxlength="20">
     <button onclick="startQuiz()">🎮 Начать викторину</button>
-    <button class="admin-btn" onclick="showScreen('screen-check')">
+    <button class="admin-btn" onclick="showAdminLogin()">
       👑 Я ВОЖАТЫЙ — проверить
     </button>
     <div id="loginMsg" class="msg"></div>
+  </div>
+
+  <!-- ВХОД ВОЖАТОГО (ПАРОЛЬ) -->
+  <div id="screen-admin-login" class="card hidden">
+    <h1>👑 ВОЖАТЫЙ</h1>
+    <p class="sub">Пароль доступа</p>
+    <input id="adminPass" type="password" placeholder="Пароль">
+    <button onclick="checkAdminPass()">Войти</button>
+    <button class="sec" onclick="showScreen('screen-login')">← Назад</button>
+    <div id="adminMsg" class="msg"></div>
   </div>
 
   <!-- ВОПРОС -->
@@ -154,6 +164,7 @@
     <textarea id="codesInput"
       placeholder="Вставляй коды с новой строки, например:&#10;Аня|АК7Х2|4/5&#10;Боря|БР9М1|3/5"></textarea>
     <button onclick="checkCodes()">📊 Проверить</button>
+    <button class="sec" onclick="clearResults()">🗑 Очистить</button>
     <button class="sec" onclick="showScreen('screen-login')">← Назад</button>
     <div id="checkResults"></div>
   </div>
@@ -161,7 +172,10 @@
 </div>
 
 <script>
-/* ===== ВОПРОСЫ ДЛЯ 1–2 КЛАССА ===== */
+/* ===== ПАРОЛЬ ВОЖАТОГО ===== */
+const ADMIN_PASSWORD = "vodadmin";
+
+/* ===== ВОПРОСЫ (у каждого свой порядок) ===== */
 const SLIDES = [
   { q:"Кто съел Колобка?",
     img:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800",
@@ -181,6 +195,7 @@ const SLIDES = [
 ];
 
 let playerName = "";
+let mySlides = [];   // свои вопросы (перемешанные)
 let idx = 0;
 let score = 0;
 
@@ -190,18 +205,34 @@ function showScreen(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
+/* ===== ПЕРЕМЕШИВАНИЕ ===== */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ===== СТАРТ ===== */
 function startQuiz() {
   const name = document.getElementById('nameInput').value.trim();
   if (!name) { document.getElementById('loginMsg').textContent='Введи имя'; return; }
   playerName = name;
+
+  // у каждого свой порядок вопросов
+  mySlides = shuffle(SLIDES);
+
   idx = 0; score = 0;
   showScreen('screen-question');
   renderQuestion();
 }
 
+/* ===== ВОПРОС ===== */
 function renderQuestion() {
-  if (idx >= SLIDES.length) { finish(); return; }
-  const s = SLIDES[idx];
+  if (idx >= mySlides.length) { finish(); return; }
+  const s = mySlides[idx];
 
   const img = document.getElementById('qImg');
   if (s.img) { img.src = s.img; img.style.display='block'; }
@@ -221,7 +252,7 @@ function renderQuestion() {
   });
 
   const pr = document.getElementById('progress'); pr.innerHTML='';
-  SLIDES.forEach((_,i)=>{
+  mySlides.forEach((_,i)=>{
     const d=document.createElement('div'); d.className='dot';
     if (i===idx) d.classList.add('active');
     else if (i<idx) d.classList.add('done');
@@ -230,7 +261,7 @@ function renderQuestion() {
 }
 
 function chooseAnswer(choice, btn) {
-  const s = SLIDES[idx];
+  const s = mySlides[idx];
   const correct = choice === s.correct;
 
   document.querySelectorAll('#options .opt').forEach(b=>b.disabled=true);
@@ -249,19 +280,20 @@ function chooseAnswer(choice, btn) {
   setTimeout(()=>{ idx++; renderQuestion(); }, 1200);
 }
 
+/* ===== ФИНАЛ ===== */
 function makeCode() {
   const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let rnd = "";
   for (let i = 0; i < 4; i++)
     rnd += ALPH[Math.floor(Math.random()*ALPH.length)];
-  return `${playerName}|${rnd}|${score}/${SLIDES.length}`;
+  return `${playerName}|${rnd}|${score}/${mySlides.length}`;
 }
 
 function finish() {
   showScreen('screen-result');
   document.getElementById('resultText').textContent = `${playerName}, твой результат:`;
   document.getElementById('resultScore').innerHTML =
-    `${score}<small> / ${SLIDES.length}</small>`;
+    `${score}<small> / ${mySlides.length}</small>`;
   const code = makeCode();
   document.getElementById('reportCode').textContent = code;
   document.getElementById('reportCode').dataset.code = code;
@@ -283,6 +315,23 @@ function backToLogin() {
   showScreen('screen-login');
 }
 
+/* ===== ВОЖАТЫЙ: ПАРОЛЬ ===== */
+function showAdminLogin() {
+  showScreen('screen-admin-login');
+  document.getElementById('adminMsg').textContent = '';
+  document.getElementById('adminPass').value = '';
+}
+
+function checkAdminPass() {
+  const pass = document.getElementById('adminPass').value;
+  if (pass === ADMIN_PASSWORD) {
+    showScreen('screen-check');
+  } else {
+    document.getElementById('adminMsg').textContent = '❌ Неверный пароль';
+  }
+}
+
+/* ===== ПРОВЕРКА КОДОВ ===== */
 function checkCodes() {
   const raw = document.getElementById('codesInput').value;
   const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
@@ -293,8 +342,7 @@ function checkCodes() {
     if (parts.length < 3) return;
     const name = parts[0].trim();
     const code = parts[1].trim();
-    const scoreStr = parts[2].trim();
-    const m = scoreStr.match(/^(\d+)\s*\/\s*(\d+)$/);
+    const m = parts[2].trim().match(/^(\d+)\s*\/\s*(\d+)$/);
     if (!m) return;
     rows.push({ name, code, sc: parseInt(m[1],10), total: parseInt(m[2],10) });
   });
@@ -323,11 +371,17 @@ function checkCodes() {
   html += '</tbody></table>';
 
   const avg = rows.reduce((s,r)=>s+r.sc,0) / rows.length;
+  const best = Math.max(...rows.map(r=>r.sc));
   html += `<div class="msg" style="margin-top:16px;">
-    Участников: ${rows.length} · Средний балл: ${avg.toFixed(1)}
+    Участников: ${rows.length} · Средний балл: ${avg.toFixed(1)} · Лучший: ${best}
   </div>`;
 
   box.innerHTML = html;
+}
+
+function clearResults() {
+  document.getElementById('codesInput').value = '';
+  document.getElementById('checkResults').innerHTML = '';
 }
 
 function escapeHtml(s) {
