@@ -3,45 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Космос 4</title>
+<title>Космос 4 · БРО2014</title>
 <style>
-  * { box-sizing:border-box; }
-  body { margin:0; min-height:100vh; background:#0a0e27; color:#e0e0ff;
-         font-family:system-ui,sans-serif; display:flex;
-         align-items:center; justify-content:center; padding:20px; }
-  .card { background:#141a3d; border:1px solid #2a3366;
-          border-radius:16px; padding:36px; text-align:center;
-          max-width:440px; width:100%; }
-  h1 { margin:0 0 8px; font-size:26px; }
-  p  { color:#8890b5; margin:0 0 24px; }
-  input { width:100%; padding:12px 16px; font-size:18px;
-          border-radius:8px; border:1px solid #2a3366;
-          background:#0a0e27; color:#fff; text-align:center;
-          letter-spacing:4px; text-transform:uppercase;
-          margin-bottom:12px; }
-  button { width:100%; padding:12px; font-size:16px; border-radius:8px;
-           border:none; background:#4a5cff; color:#fff; cursor:pointer; }
-  button:hover { background:#5c6cff; }
-  .msg { min-height:20px; margin-top:10px; color:#ff6b6b; }
-  img.qr { width:220px; height:220px; background:#fff;
-           padding:12px; border-radius:12px; margin:16px auto;
-           display:block; }
-  .hint { margin-top:16px; color:#7cf; }
-  .back { display:inline-block; margin-top:20px; color:#8890b5;
-          cursor:pointer; text-decoration:underline; }
+  :root {
+    --bg:#000; --card:#0e0e0e; --line:#262626;
+    --text:#f5f5f5; --muted:#8a8a8a; --white:#fff;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% -10%, #1c1c1c 0%, #000 55%);
+    color:var(--text);
+    font-family:'Segoe UI',system-ui,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px; position:relative; overflow:hidden;
+  }
+
+  /* сетка-фон */
+  body::after {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
+    -webkit-mask-image:radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
+  }
+
+  /* снег */
+  .snow {
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      radial-gradient(2px 2px at 10% 10%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 30% 40%, #fff, transparent),
+      radial-gradient(2px 2px at 55% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 75% 50%, #fff, transparent),
+      radial-gradient(2px 2px at 90% 30%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 20% 70%, #fff, transparent),
+      radial-gradient(2px 2px at 65% 80%, #fff, transparent),
+      radial-gradient(1px 1px at 45% 90%, #fff, transparent);
+    animation:snowfall 12s linear infinite;
+    opacity:.45;
+  }
+  @keyframes snowfall {
+    from { transform:translateY(-100vh); }
+    to   { transform:translateY(100vh); }
+  }
+
+  /* ===== ВЕРХНЯЯ ПАНЕЛЬ — НАПОМИНАНИЕ КОДА ===== */
+  .topbar {
+    position:fixed; top:0; left:0; right:0; z-index:10;
+    background:rgba(8,8,8,.94);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid #1f1f1f;
+    padding:12px 20px;
+    display:flex; align-items:center; justify-content:center;
+    gap:16px; flex-wrap:wrap;
+  }
+  .topbar .dot {
+    width:8px; height:8px; border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 12px #fff, 0 0 24px rgba(255,255,255,.6);
+    animation:blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity:1; }
+    50%     { opacity:.25; }
+  }
+  .topbar .label {
+    color:var(--muted); font-size:11px; letter-spacing:2px;
+    text-transform:uppercase;
+  }
+  .topbar .code {
+    font-size:24px; font-weight:800; letter-spacing:8px;
+    color:#fff; padding:6px 18px;
+    border:1.5px solid #3a3a3a; border-radius:12px;
+    background:#000;
+    box-shadow:0 0 24px rgba(255,255,255,.18),
+               inset 0 0 20px rgba(255,255,255,.04);
+    font-variant-numeric:tabular-nums;
+    transition:transform .2s;
+  }
+  .topbar .code.flash {
+    animation:flash .6s ease-out;
+  }
+  @keyframes flash {
+    0%   { transform:scale(1.12); box-shadow:0 0 40px rgba(255,255,255,.6); }
+    100% { transform:scale(1); }
+  }
+  .topbar .timer {
+    color:var(--muted); font-size:13px;
+    display:flex; align-items:center; gap:6px;
+    font-variant-numeric:tabular-nums;
+  }
+  .topbar .timer b { color:#fff; }
+  .topbar .timer svg { width:14px; height:14px; opacity:.65; }
+
+  /* ===== КАРТОЧКА ===== */
+  .card {
+    position:relative; z-index:1;
+    background:linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
+    border:1px solid #222;
+    border-radius:26px;
+    padding:44px 36px;
+    text-align:center;
+    max-width:440px; width:100%;
+    margin-top:90px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.02),
+      0 30px 80px rgba(0,0,0,.8),
+      0 0 60px rgba(255,255,255,.05);
+    animation:fadeUp .6s ease-out;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .logo {
+    width:70px; height:70px; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    border:1.5px solid #333;
+    background:radial-gradient(circle at 30% 30%, #1c1c1c, #000);
+    box-shadow:0 0 40px rgba(255,255,255,.12);
+    animation:pulseLogo 3s ease-in-out infinite;
+  }
+  @keyframes pulseLogo {
+    0%,100% { box-shadow:0 0 25px rgba(255,255,255,.1); }
+    50%     { box-shadow:0 0 55px rgba(255,255,255,.28); }
+  }
+  .logo svg { width:38px; height:38px; }
+
+  h1 {
+    font-size:28px; font-weight:800; margin-bottom:6px;
+    color:#fff; letter-spacing:5px;
+  }
+  .sub {
+    color:var(--muted); margin-bottom:28px; font-size:12px;
+    letter-spacing:3px; text-transform:uppercase;
+  }
+
+  /* поле ввода */
+  .input-wrap { position:relative; margin-bottom:14px; }
+  .input-wrap svg {
+    position:absolute; left:15px; top:50%;
+    transform:translateY(-50%);
+    width:20px; height:20px; opacity:.5;
+  }
+  input {
+    width:100%; padding:15px 16px 15px 46px;
+    font-size:18px; border-radius:14px;
+    border:1.5px solid #2c2c2c;
+    background:#050505;
+    color:#fff; letter-spacing:5px; text-transform:uppercase;
+    font-weight:700; transition:.25s;
+  }
+  input:focus {
+    outline:none; border-color:#fff;
+    box-shadow:0 0 0 3px rgba(255,255,255,.08),
+               0 0 24px rgba(255,255,255,.2);
+  }
+  input::placeholder {
+    letter-spacing:1px; color:#4a4a4a; font-weight:400;
+  }
+
+  button {
+    width:100%; padding:15px; font-size:15px; font-weight:700;
+    border-radius:14px; border:1px solid #fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    background:#fff; color:#000; letter-spacing:1.5px;
+    transition:.25s;
+  }
+  button svg { width:18px; height:18px; }
+  button:hover {
+    background:#000; color:#fff;
+    box-shadow:0 0 30px rgba(255,255,255,.35);
+    transform:translateY(-1px);
+  }
+  button:active { transform:translateY(0) scale(.99); }
+
+  .msg { min-height:20px; margin-top:14px; color:#fff; font-size:14px; }
+
+  /* QR */
+  .qr-frame {
+    display:inline-block; padding:16px;
+    background:#fff; border-radius:22px;
+    box-shadow:0 0 50px rgba(255,255,255,.35);
+    margin:18px 0;
+    animation:pulseQr 2.8s ease-in-out infinite;
+  }
+  @keyframes pulseQr {
+    0%,100% { box-shadow:0 0 40px rgba(255,255,255,.3); }
+    50%     { box-shadow:0 0 70px rgba(255,255,255,.5); }
+  }
+  .qr-frame img { width:220px; height:220px; display:block; }
+
+  .wait-text {
+    font-size:16px; line-height:1.65; color:#c8c8c8;
+    margin-top:8px; font-weight:500;
+  }
+  .wait-text strong { color:#fff; }
+
+  .back {
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:26px; color:var(--muted);
+    cursor:pointer; font-size:14px; transition:.2s;
+  }
+  .back:hover { color:#fff; }
+  .back svg { width:16px; height:16px; }
+
   .page { display:none; }
   .page.active { display:block; }
 </style>
 </head>
 <body>
+<div class="snow"></div>
+
+<!-- ВЕРХНЯЯ ПАНЕЛЬ — НАПОМИНАНИЕ КОДА -->
+<div class="topbar">
+  <span class="dot"></span>
+  <span class="label">Код сейчас</span>
+  <span class="code" id="topCode">----</span>
+  <span class="timer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+    смена через <b id="timer">15:00</b>
+  </span>
+</div>
 
 <!-- ГЛАВНАЯ -->
 <div id="page-login" class="page active">
   <div class="card">
-    <h1>🚀 Космос 4</h1>
-    <p>Введите код доступа</p>
-    <input id="codeInput" maxlength="12" placeholder="КОД" autocomplete="off">
-    <button onclick="checkCode()">Войти</button>
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+        <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+      </svg>
+    </div>
+
+    <h1>КОСМОС 4</h1>
+    <p class="sub">Вход по коду</p>
+
+    <div class="input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="7.5" cy="15.5" r="5.5"/>
+        <path d="m21 2-9.6 9.6"/>
+        <path d="m15.5 7.5 3 3L22 7l-3-3"/>
+      </svg>
+      <input id="codeInput" maxlength="6" placeholder="КОД" autocomplete="off">
+    </div>
+
+    <button onclick="checkCode()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <polyline points="10 17 15 12 10 7"/>
+        <line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      Войти
+    </button>
+
     <div id="loginMsg" class="msg"></div>
   </div>
 </div>
@@ -49,22 +279,75 @@
 <!-- СТРАНИЦА С QR -->
 <div id="page-qr" class="page">
   <div class="card">
-    <h1>📷 Шаг 1</h1>
-    <p>Отсканируй QR-код</p>
-    <img class="qr"
-         src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=Привет!+Жди+следующего+шага+🚀"
-         alt="QR-код">
-    <div class="hint">Потихоньку отсканируй и жди следующего 🚀</div>
-    <span class="back" onclick="showPage('page-login')">← Назад</span>
+    <h1 style="font-size:22px;">ШАГ 1</h1>
+    <p class="sub">Отсканируй QR-код</p>
+
+    <div class="qr-frame">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=Ты+будешь+ждать+вожатого.+Просто+жди."
+           alt="QR-код">
+    </div>
+
+    <div class="wait-text">
+      Ты будешь ждать <strong>вожатого</strong>.<br>
+      Просто <strong>жди</strong>.
+    </div>
+
+    <span class="back" onclick="showPage('page-login')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Назад
+    </span>
   </div>
 </div>
 
 <script>
-/* ===== КОДЫ ===== */
-const CODES = {
-  "КОСМОС4": "page-qr"     // ← код ведёт на страницу с QR
-};
+/* ===== НАСТРОЙКИ ===== */
+const PERIOD_MS = 15 * 60 * 1000;   // 15 минут
+const SECRET    = "БРО2014";        // ← новый код
 
+let lastCode = "";
+
+/* Генерация кода */
+function currentCode() {
+  const win = Math.floor(Date.now() / PERIOD_MS);
+  let h = 0;
+  const str = SECRET + win;
+  for (let i = 0; i < str.length; i++)
+    h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 4; i++) {
+    code += ALPH[h % ALPH.length];
+    h = Math.floor(h / ALPH.length);
+  }
+  return code;
+}
+
+/* Обновление верхней панели (код + таймер) */
+function updateTop() {
+  const code = currentCode();
+  const el = document.getElementById('topCode');
+  if (el && el.textContent !== code) {
+    el.textContent = code;
+    el.classList.remove('flash');
+    void el.offsetWidth;          // сброс анимации
+    el.classList.add('flash');    // вспышка при смене
+    lastCode = code;
+  }
+
+  const left = PERIOD_MS - (Date.now() % PERIOD_MS);
+  const m = String(Math.floor(left / 60000)).padStart(2,'0');
+  const s = String(Math.floor((left % 60000) / 1000)).padStart(2,'0');
+  const t = document.getElementById('timer');
+  if (t) t.textContent = m + ':' + s;
+}
+setInterval(updateTop, 500);
+updateTop();
+
+/* Навигация */
 function showPage(id) {
   document.querySelectorAll('.page')
     .forEach(p => p.classList.remove('active'));
@@ -73,17 +356,18 @@ function showPage(id) {
   window.scrollTo(0,0);
 }
 
+/* Проверка */
 function checkCode() {
-  const code = document.getElementById('codeInput').value
+  const input = document.getElementById('codeInput').value
                  .trim().toUpperCase();
-  const msg  = document.getElementById('loginMsg');
-  if (!code) { msg.textContent = 'Введите код'; return; }
+  const msg   = document.getElementById('loginMsg');
+  if (!input) { msg.textContent = 'Введи код'; return; }
 
-  if (CODES[code]) {
+  if (input === currentCode()) {
     msg.textContent = '';
-    showPage(CODES[code]);
+    showPage('page-qr');
   } else {
-    msg.textContent = '❌ Код не найден';
+    msg.textContent = 'Код неверный или устарел';
   }
 }
 
@@ -92,7 +376,6 @@ document.getElementById('codeInput')
     if (e.key === 'Enter') checkCode();
   });
 
-/* если в URL есть #page-qr — открыть сразу */
 const hash = location.hash.replace('#','');
 if (hash && document.getElementById(hash)) showPage(hash);
 </script>
