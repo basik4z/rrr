@@ -3,381 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Космос 4 · БРО2014</title>
+<title>Космос 4 · Викторина</title>
 <style>
-  :root {
-    --bg:#000; --card:#0e0e0e; --line:#262626;
-    --text:#f5f5f5; --muted:#8a8a8a; --white:#fff;
-  }
   * { box-sizing:border-box; margin:0; padding:0; }
   body {
     min-height:100vh;
-    background:
-      radial-gradient(circle at 50% -10%, #1c1c1c 0%, #000 55%);
-    color:var(--text);
-    font-family:'Segoe UI',system-ui,sans-serif;
+    background:radial-gradient(circle at 50% -10%, #1c1c1c 0%, #000 55%);
+    color:#f5f5f5; font-family:'Segoe UI',system-ui,sans-serif;
     display:flex; align-items:center; justify-content:center;
-    padding:20px; position:relative; overflow:hidden;
+    padding:20px;
   }
-
-  /* сетка-фон */
-  body::after {
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-    background-size:40px 40px;
-    mask-image:radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
-    -webkit-mask-image:radial-gradient(circle at 50% 40%, #000 20%, transparent 75%);
-  }
-
-  /* снег */
-  .snow {
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background-image:
-      radial-gradient(2px 2px at 10% 10%, #fff, transparent),
-      radial-gradient(1.5px 1.5px at 30% 40%, #fff, transparent),
-      radial-gradient(2px 2px at 55% 20%, #fff, transparent),
-      radial-gradient(1px 1px at 75% 50%, #fff, transparent),
-      radial-gradient(2px 2px at 90% 30%, #fff, transparent),
-      radial-gradient(1.5px 1.5px at 20% 70%, #fff, transparent),
-      radial-gradient(2px 2px at 65% 80%, #fff, transparent),
-      radial-gradient(1px 1px at 45% 90%, #fff, transparent);
-    animation:snowfall 12s linear infinite;
-    opacity:.45;
-  }
-  @keyframes snowfall {
-    from { transform:translateY(-100vh); }
-    to   { transform:translateY(100vh); }
-  }
-
-  /* ===== ВЕРХНЯЯ ПАНЕЛЬ — НАПОМИНАНИЕ КОДА ===== */
-  .topbar {
-    position:fixed; top:0; left:0; right:0; z-index:10;
-    background:rgba(8,8,8,.94);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid #1f1f1f;
-    padding:12px 20px;
-    display:flex; align-items:center; justify-content:center;
-    gap:16px; flex-wrap:wrap;
-  }
-  .topbar .dot {
-    width:8px; height:8px; border-radius:50%;
-    background:#fff;
-    box-shadow:0 0 12px #fff, 0 0 24px rgba(255,255,255,.6);
-    animation:blink 1.4s ease-in-out infinite;
-  }
-  @keyframes blink {
-    0%,100% { opacity:1; }
-    50%     { opacity:.25; }
-  }
-  .topbar .label {
-    color:var(--muted); font-size:11px; letter-spacing:2px;
-    text-transform:uppercase;
-  }
-  .topbar .code {
-    font-size:24px; font-weight:800; letter-spacing:8px;
-    color:#fff; padding:6px 18px;
-    border:1.5px solid #3a3a3a; border-radius:12px;
-    background:#000;
-    box-shadow:0 0 24px rgba(255,255,255,.18),
-               inset 0 0 20px rgba(255,255,255,.04);
-    font-variant-numeric:tabular-nums;
-    transition:transform .2s;
-  }
-  .topbar .code.flash {
-    animation:flash .6s ease-out;
-  }
-  @keyframes flash {
-    0%   { transform:scale(1.12); box-shadow:0 0 40px rgba(255,255,255,.6); }
-    100% { transform:scale(1); }
-  }
-  .topbar .timer {
-    color:var(--muted); font-size:13px;
-    display:flex; align-items:center; gap:6px;
-    font-variant-numeric:tabular-nums;
-  }
-  .topbar .timer b { color:#fff; }
-  .topbar .timer svg { width:14px; height:14px; opacity:.65; }
-
-  /* ===== КАРТОЧКА ===== */
+  .wrap { width:100%; max-width:640px; }
   .card {
-    position:relative; z-index:1;
-    background:linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
-    border:1px solid #222;
-    border-radius:26px;
-    padding:44px 36px;
-    text-align:center;
-    max-width:440px; width:100%;
-    margin-top:90px;
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,.02),
-      0 30px 80px rgba(0,0,0,.8),
-      0 0 60px rgba(255,255,255,.05);
-    animation:fadeUp .6s ease-out;
+    background:linear-gradient(180deg,#121212,#0a0a0a);
+    border:1px solid #222; border-radius:24px; padding:34px 28px;
+    box-shadow:0 30px 80px rgba(0,0,0,.8);
+    animation:fadeUp .5s ease-out;
   }
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(24px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-
-  .logo {
-    width:70px; height:70px; margin:0 auto 16px;
-    display:flex; align-items:center; justify-content:center;
-    border-radius:50%;
-    border:1.5px solid #333;
-    background:radial-gradient(circle at 30% 30%, #1c1c1c, #000);
-    box-shadow:0 0 40px rgba(255,255,255,.12);
-    animation:pulseLogo 3s ease-in-out infinite;
-  }
-  @keyframes pulseLogo {
-    0%,100% { box-shadow:0 0 25px rgba(255,255,255,.1); }
-    50%     { box-shadow:0 0 55px rgba(255,255,255,.28); }
-  }
-  .logo svg { width:38px; height:38px; }
-
-  h1 {
-    font-size:28px; font-weight:800; margin-bottom:6px;
-    color:#fff; letter-spacing:5px;
-  }
-  .sub {
-    color:var(--muted); margin-bottom:28px; font-size:12px;
-    letter-spacing:3px; text-transform:uppercase;
-  }
-
-  /* поле ввода */
-  .input-wrap { position:relative; margin-bottom:14px; }
-  .input-wrap svg {
-    position:absolute; left:15px; top:50%;
-    transform:translateY(-50%);
-    width:20px; height:20px; opacity:.5;
-  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  h1 { font-size:24px; font-weight:800; letter-spacing:3px;
+       text-align:center; margin-bottom:6px; }
+  .sub { color:#8a8a8a; font-size:12px; letter-spacing:2px;
+         text-transform:uppercase; text-align:center; margin-bottom:24px; }
   input {
-    width:100%; padding:15px 16px 15px 46px;
-    font-size:18px; border-radius:14px;
-    border:1.5px solid #2c2c2c;
-    background:#050505;
-    color:#fff; letter-spacing:5px; text-transform:uppercase;
-    font-weight:700; transition:.25s;
+    width:100%; padding:14px 16px; font-size:16px; border-radius:12px;
+    border:1.5px solid #2c2c2c; background:#050505; color:#fff;
+    margin-bottom:12px;
   }
-  input:focus {
-    outline:none; border-color:#fff;
-    box-shadow:0 0 0 3px rgba(255,255,255,.08),
-               0 0 24px rgba(255,255,255,.2);
-  }
-  input::placeholder {
-    letter-spacing:1px; color:#4a4a4a; font-weight:400;
-  }
-
+  input:focus { outline:none; border-color:#fff;
+                box-shadow:0 0 0 3px rgba(255,255,255,.08); }
   button {
-    width:100%; padding:15px; font-size:15px; font-weight:700;
-    border-radius:14px; border:1px solid #fff; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    background:#fff; color:#000; letter-spacing:1.5px;
-    transition:.25s;
+    width:100%; padding:14px; font-size:15px; font-weight:700;
+    border-radius:12px; border:1px solid #fff; cursor:pointer;
+    background:#fff; color:#000; letter-spacing:1px;
+    transition:.2s; margin-bottom:8px;
   }
-  button svg { width:18px; height:18px; }
-  button:hover {
-    background:#000; color:#fff;
-    box-shadow:0 0 30px rgba(255,255,255,.35);
-    transform:translateY(-1px);
+  button:hover { background:#000; color:#fff;
+                 box-shadow:0 0 24px rgba(255,255,255,.3); }
+  button.sec { background:transparent; color:#fff; border-color:#333; }
+  button.sec:hover { background:#fff; color:#000; }
+  button:disabled { opacity:.4; cursor:not-allowed; }
+  .msg { min-height:20px; margin-top:10px; text-align:center; font-size:14px; }
+  .hidden { display:none !important; }
+  .q-img { width:100%; max-height:260px; object-fit:cover;
+           border-radius:14px; margin-bottom:18px; border:1px solid #222; }
+  .q-text { font-size:20px; font-weight:700; text-align:center;
+            margin-bottom:20px; line-height:1.4; }
+  .options { display:grid; gap:10px; }
+  .opt {
+    padding:14px 18px; border-radius:12px; border:1.5px solid #2c2c2c;
+    background:#080808; color:#fff; font-size:15px; text-align:left;
+    display:flex; align-items:center; gap:12px;
+    cursor:pointer; transition:.2s; width:100%;
   }
-  button:active { transform:translateY(0) scale(.99); }
-
-  .msg { min-height:20px; margin-top:14px; color:#fff; font-size:14px; }
-
-  /* QR */
-  .qr-frame {
-    display:inline-block; padding:16px;
-    background:#fff; border-radius:22px;
-    box-shadow:0 0 50px rgba(255,255,255,.35);
-    margin:18px 0;
-    animation:pulseQr 2.8s ease-in-out infinite;
-  }
-  @keyframes pulseQr {
-    0%,100% { box-shadow:0 0 40px rgba(255,255,255,.3); }
-    50%     { box-shadow:0 0 70px rgba(255,255,255,.5); }
-  }
-  .qr-frame img { width:220px; height:220px; display:block; }
-
-  .wait-text {
-    font-size:16px; line-height:1.65; color:#c8c8c8;
-    margin-top:8px; font-weight:500;
-  }
-  .wait-text strong { color:#fff; }
-
-  .back {
-    display:inline-flex; align-items:center; gap:6px;
-    margin-top:26px; color:var(--muted);
-    cursor:pointer; font-size:14px; transition:.2s;
-  }
-  .back:hover { color:#fff; }
-  .back svg { width:16px; height:16px; }
-
-  .page { display:none; }
-  .page.active { display:block; }
+  .opt:hover { border-color:#fff; background:#141414; }
+  .opt .letter { width:26px; height:26px; border-radius:50%;
+                 background:#222; display:flex; align-items:center;
+                 justify-content:center; font-weight:700; font-size:13px; }
+  .opt.correct { border-color:#4ade80; background:#0a2a15; }
+  .opt.wrong   { border-color:#f87171; background:#2a0a0a; }
+  .progress { display:flex; justify-content:center; gap:6px; margin-bottom:20px; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#222; }
+  .dot.active { background:#fff; box-shadow:0 0 12px #fff; }
+  .dot.done   { background:#555; }
+  .score { font-size:56px; font-weight:800; text-align:center; margin:16px 0;
+           letter-spacing:2px; }
+  .score small { font-size:22px; color:#8a8a8a; }
 </style>
 </head>
 <body>
-<div class="snow"></div>
+<div class="wrap">
 
-<!-- ВЕРХНЯЯ ПАНЕЛЬ — НАПОМИНАНИЕ КОДА -->
-<div class="topbar">
-  <span class="dot"></span>
-  <span class="label">Код сейчас</span>
-  <span class="code" id="topCode">----</span>
-  <span class="timer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
-         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <polyline points="12 6 12 12 16 14"/>
-    </svg>
-    смена через <b id="timer">15:00</b>
-  </span>
-</div>
-
-<!-- ГЛАВНАЯ -->
-<div id="page-login" class="page active">
-  <div class="card">
-    <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
-           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-        <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
-      </svg>
-    </div>
-
+  <!-- ВХОД -->
+  <div id="screen-login" class="card">
     <h1>КОСМОС 4</h1>
-    <p class="sub">Вход по коду</p>
-
-    <div class="input-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff"
-           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="7.5" cy="15.5" r="5.5"/>
-        <path d="m21 2-9.6 9.6"/>
-        <path d="m15.5 7.5 3 3L22 7l-3-3"/>
-      </svg>
-      <input id="codeInput" maxlength="6" placeholder="КОД" autocomplete="off">
-    </div>
-
-    <button onclick="checkCode()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-        <polyline points="10 17 15 12 10 7"/>
-        <line x1="15" y1="12" x2="3" y2="12"/>
-      </svg>
-      Войти
-    </button>
-
+    <p class="sub">Викторина · 5 вопросов</p>
+    <input id="nameInput" placeholder="Твоё имя" maxlength="20">
+    <button onclick="startQuiz()">Начать</button>
     <div id="loginMsg" class="msg"></div>
   </div>
-</div>
 
-<!-- СТРАНИЦА С QR -->
-<div id="page-qr" class="page">
-  <div class="card">
-    <h1 style="font-size:22px;">ШАГ 1</h1>
-    <p class="sub">Отсканируй QR-код</p>
-
-    <div class="qr-frame">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=Ты+будешь+ждать+вожатого.+Просто+жди."
-           alt="QR-код">
-    </div>
-
-    <div class="wait-text">
-      Ты будешь ждать <strong>вожатого</strong>.<br>
-      Просто <strong>жди</strong>.
-    </div>
-
-    <span class="back" onclick="showPage('page-login')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12"/>
-        <polyline points="12 19 5 12 12 5"/>
-      </svg>
-      Назад
-    </span>
+  <!-- ВОПРОС -->
+  <div id="screen-question" class="card hidden">
+    <div class="progress" id="progress"></div>
+    <img id="qImg" class="q-img" alt="" style="display:none;">
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="options"></div>
+    <div id="answerMsg" class="msg"></div>
   </div>
+
+  <!-- РЕЗУЛЬТАТ -->
+  <div id="screen-result" class="card hidden">
+    <h1>РЕЗУЛЬТАТ</h1>
+    <div id="resultText" style="text-align:center; font-size:16px;
+         color:#8a8a8a; margin-top:8px;"></div>
+    <div class="score" id="resultScore"></div>
+    <button onclick="restart()">Пройти ещё раз</button>
+  </div>
+
 </div>
 
 <script>
-/* ===== НАСТРОЙКИ ===== */
-const PERIOD_MS = 15 * 60 * 1000;   // 15 минут
-const SECRET    = "БРО2014";        // ← новый код
+/* ===== ВОПРОСЫ (можешь менять) ===== */
+const SLIDES = [
+  { q:"Столица Франции?",
+    img:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800",
+    options:["Париж","Лондон","Рим","Берлин"], correct:0 },
+  { q:"Сколько планет в Солнечной системе?",
+    img:"https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800",
+    options:["7","8","9","10"], correct:1 },
+  { q:"Кто написал «Войну и мир»?",
+    img:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800",
+    options:["Пушкин","Достоевский","Толстой","Чехов"], correct:2 },
+  { q:"Какой газ преобладает в атмосфере Земли?",
+    img:"https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800",
+    options:["Кислород","Азот","Углекислый газ","Водород"], correct:1 },
+  { q:"Самая большая планета?",
+    img:"https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800",
+    options:["Сатурн","Нептун","Юпитер","Уран"], correct:2 }
+];
 
-let lastCode = "";
+let playerName = "";
+let idx = 0;
+let score = 0;
 
-/* Генерация кода */
-function currentCode() {
-  const win = Math.floor(Date.now() / PERIOD_MS);
-  let h = 0;
-  const str = SECRET + win;
-  for (let i = 0; i < str.length; i++)
-    h = (h * 31 + str.charCodeAt(i)) >>> 0;
-  const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code = "";
-  for (let i = 0; i < 4; i++) {
-    code += ALPH[h % ALPH.length];
-    h = Math.floor(h / ALPH.length);
-  }
-  return code;
+function showScreen(id) {
+  document.querySelectorAll('.wrap > div')
+    .forEach(d => d.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 }
 
-/* Обновление верхней панели (код + таймер) */
-function updateTop() {
-  const code = currentCode();
-  const el = document.getElementById('topCode');
-  if (el && el.textContent !== code) {
-    el.textContent = code;
-    el.classList.remove('flash');
-    void el.offsetWidth;          // сброс анимации
-    el.classList.add('flash');    // вспышка при смене
-    lastCode = code;
-  }
-
-  const left = PERIOD_MS - (Date.now() % PERIOD_MS);
-  const m = String(Math.floor(left / 60000)).padStart(2,'0');
-  const s = String(Math.floor((left % 60000) / 1000)).padStart(2,'0');
-  const t = document.getElementById('timer');
-  if (t) t.textContent = m + ':' + s;
-}
-setInterval(updateTop, 500);
-updateTop();
-
-/* Навигация */
-function showPage(id) {
-  document.querySelectorAll('.page')
-    .forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  location.hash = (id === 'page-login') ? '' : id;
-  window.scrollTo(0,0);
+function startQuiz() {
+  const name = document.getElementById('nameInput').value.trim();
+  if (!name) { document.getElementById('loginMsg').textContent='Введи имя'; return; }
+  playerName = name;
+  idx = 0; score = 0;
+  showScreen('screen-question');
+  renderQuestion();
 }
 
-/* Проверка */
-function checkCode() {
-  const input = document.getElementById('codeInput').value
-                 .trim().toUpperCase();
-  const msg   = document.getElementById('loginMsg');
-  if (!input) { msg.textContent = 'Введи код'; return; }
+function renderQuestion() {
+  if (idx >= SLIDES.length) { finish(); return; }
+  const s = SLIDES[idx];
 
-  if (input === currentCode()) {
-    msg.textContent = '';
-    showPage('page-qr');
-  } else {
-    msg.textContent = 'Код неверный или устарел';
-  }
-}
+  const img = document.getElementById('qImg');
+  if (s.img) { img.src = s.img; img.style.display='block'; }
+  else img.style.display='none';
 
-document.getElementById('codeInput')
-  .addEventListener('keydown', e => {
-    if (e.key === 'Enter') checkCode();
+  document.getElementById('qText').textContent = s.q;
+  document.getElementById('answerMsg').textContent = '';
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  s.options.forEach((text,i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.innerHTML = `<span class="letter">${'ABCD'[i]}</span><span>${text}</span>`;
+    b.onclick = () => chooseAnswer(i, b);
+    opts.appendChild(b);
   });
 
-const hash = location.hash.replace('#','');
-if (hash && document.getElementById(hash)) showPage(hash);
+  // прогресс
+  const pr = document.getElementById('progress'); pr.innerHTML='';
+  SLIDES.forEach((_,i)=>{
+    const d=document.createElement('div'); d.className='dot';
+    if (i===idx) d.classList.add('active');
+    else if (i<idx) d.classList.add('done');
+    pr.appendChild(d);
+  });
+}
+
+function chooseAnswer(choice, btn) {
+  const s = SLIDES[idx];
+  const correct = choice === s.correct;
+
+  // блокируем все
+  document.querySelectorAll('#options .opt').forEach(b=>b.disabled=true);
+
+  if (correct) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('answerMsg').textContent = '✅ Правильно!';
+  } else {
+    btn.classList.add('wrong');
+    // подсветить правильный
+    document.querySelectorAll('#options .opt')[s.correct]
+      .classList.add('correct');
+    document.getElementById('answerMsg').textContent = '❌ Неправильно';
+  }
+
+  setTimeout(()=>{ idx++; renderQuestion(); }, 1200);
+}
+
+function finish() {
+  showScreen('screen-result');
+  document.getElementById('resultText').textContent =
+    `${playerName}, твой результат:`;
+  document.getElementById('resultScore').innerHTML =
+    `${score}<small> / ${SLIDES.length}</small>`;
+}
+
+function restart() {
+  idx = 0; score = 0;
+  document.getElementById('nameInput').value = playerName;
+  showScreen('screen-login');
+}
 </script>
 </body>
 </html>
