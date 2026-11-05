@@ -1,3 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Космос 4 · Сказки</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    min-height:100vh;
+    background:radial-gradient(circle at 50% -10%, #1c1c1c 0%, #000 55%);
+    color:#f5f5f5; font-family:'Segoe UI',system-ui,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .wrap { width:100%; max-width:680px; }
+  .card {
+    background:linear-gradient(180deg,#121212,#0a0a0a);
+    border:1px solid #222; border-radius:24px; padding:34px 28px;
+    box-shadow:0 30px 80px rgba(0,0,0,.8);
+    animation:fadeUp .5s ease-out;
+  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  h1 { font-size:24px; font-weight:800; letter-spacing:3px;
+       text-align:center; margin-bottom:6px; }
+  .sub { color:#8a8a8a; font-size:12px; letter-spacing:2px;
+         text-transform:uppercase; text-align:center; margin-bottom:24px; }
+  input {
+    width:100%; padding:14px 16px; font-size:16px; border-radius:12px;
+    border:1.5px solid #2c2c2c; background:#050505; color:#fff;
+    margin-bottom:12px;
+  }
+  input:focus { outline:none; border-color:#fff;
+                box-shadow:0 0 0 3px rgba(255,255,255,.08); }
+  textarea {
+    width:100%; padding:14px 16px; font-size:14px; border-radius:12px;
+    border:1.5px solid #2c2c2c; background:#050505; color:#fff;
+    font-family:monospace; resize:vertical; min-height:90px;
+    margin-bottom:12px;
+  }
+  textarea:focus { outline:none; border-color:#fff; }
+  button {
+    width:100%; padding:14px; font-size:15px; font-weight:700;
+    border-radius:12px; border:1px solid #fff; cursor:pointer;
+    background:#fff; color:#000; letter-spacing:1px;
+    transition:.2s; margin-bottom:8px;
+  }
+  button:hover { background:#000; color:#fff;
+                 box-shadow:0 0 24px rgba(255,255,255,.3); }
+  button.sec { background:transparent; color:#fff; border-color:#333; }
+  button.sec:hover { background:#fff; color:#000; }
+  button:disabled { opacity:.4; cursor:not-allowed; }
+  button.admin-btn {
+    background:linear-gradient(90deg,#4a2a7a,#7a2a5a);
+    border:1px solid #a060d0; color:#fff;
+    font-size:15px; padding:16px;
+    box-shadow:0 0 24px rgba(160,96,208,.35);
+  }
+  button.admin-btn:hover {
+    background:linear-gradient(90deg,#6a3a9a,#9a3a7a);
+    box-shadow:0 0 36px rgba(160,96,208,.6);
+    transform:translateY(-1px);
+  }
+  .msg { min-height:20px; margin-top:10px; text-align:center; font-size:14px; }
+  .hidden { display:none !important; }
+  .q-img { width:100%; max-height:260px; object-fit:cover;
+           border-radius:14px; margin-bottom:18px; border:1px solid #222; }
+  .q-text { font-size:20px; font-weight:700; text-align:center;
+            margin-bottom:20px; line-height:1.4; }
+  .options { display:grid; gap:10px; }
+  .opt {
+    padding:14px 18px; border-radius:12px; border:1.5px solid #2c2c2c;
+    background:#080808; color:#fff; font-size:15px; text-align:left;
+    display:flex; align-items:center; gap:12px;
+    cursor:pointer; transition:.2s; width:100%;
+  }
+  .opt:hover { border-color:#fff; background:#141414; }
+  .opt .letter { width:26px; height:26px; border-radius:50%;
+                 background:#222; display:flex; align-items:center;
+                 justify-content:center; font-weight:700; font-size:13px; }
+  .opt.correct { border-color:#4ade80; background:#0a2a15; }
+  .opt.wrong   { border-color:#f87171; background:#2a0a0a; }
+  .progress { display:flex; justify-content:center; gap:6px; margin-bottom:20px; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#222; }
+  .dot.active { background:#fff; box-shadow:0 0 12px #fff; }
+  .dot.done   { background:#555; }
+  .score { font-size:56px; font-weight:800; text-align:center; margin:16px 0;
+           letter-spacing:2px; }
+  .score small { font-size:22px; color:#8a8a8a; }
+  .report-code {
+    font-family:monospace; font-size:22px; font-weight:700;
+    text-align:center; letter-spacing:3px; padding:16px;
+    background:#050505; border:1.5px dashed #444; border-radius:12px;
+    margin:16px 0; word-break:break-all; cursor:pointer;
+    transition:.2s;
+  }
+  .report-code:hover { border-color:#fff; }
+  .report-hint { text-align:center; color:#8a8a8a; font-size:13px; }
+  .results-table { width:100%; border-collapse:collapse; margin-top:16px; }
+  .results-table th {
+    font-size:12px; text-transform:uppercase; color:#8a8a8a;
+    text-align:left; padding:10px 12px; border-bottom:1px solid #222;
+  }
+  .results-table td {
+    padding:10px 12px; border-bottom:1px solid #141414; font-size:14px;
+  }
+  .results-table tr:hover td { background:#0d0d0d; }
+  .empty { text-align:center; color:#555; padding:24px 0; font-size:14px; }
+  .top1 { color:#ffd700; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ВХОД -->
+  <div id="screen-login" class="card">
+    <h1>КОСМОС 4</h1>
+    <p class="sub">Викторина по сказкам · 5 вопросов</p>
+    <input id="nameInput" placeholder="Твоё имя" maxlength="20">
+    <button onclick="startQuiz()">🎮 Начать викторину</button>
+    <button class="admin-btn" onclick="showScreen('screen-check')">
+      👑 Я ВОЖАТЫЙ — проверить
+    </button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+
+  <!-- ВОПРОС -->
+  <div id="screen-question" class="card hidden">
+    <div class="progress" id="progress"></div>
+    <img id="qImg" class="q-img" alt="" style="display:none;">
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="options"></div>
+    <div id="answerMsg" class="msg"></div>
+  </div>
+
+  <!-- РЕЗУЛЬТАТ + КОД -->
+  <div id="screen-result" class="card hidden">
+    <h1>РЕЗУЛЬТАТ</h1>
+    <div id="resultText" style="text-align:center; font-size:16px;
+         color:#8a8a8a; margin-top:8px;"></div>
+    <div class="score" id="resultScore"></div>
+    <p class="report-hint">Покажи этот код вожатому:</p>
+    <div class="report-code" id="reportCode" onclick="copyCode()"></div>
+    <p class="report-hint" style="margin-bottom:16px;">
+      (нажми на код, чтобы скопировать)
+    </p>
+    <button onclick="backToLogin()">← К списку</button>
+  </div>
+
+  <!-- ПРОВЕРКА ВОЖАТЫМ -->
+  <div id="screen-check" class="card hidden">
+    <h1>👑 ВОЖАТЫЙ</h1>
+    <p class="sub">Вставь коды от участников</p>
+    <textarea id="codesInput"
+      placeholder="Вставляй коды с новой строки, например:&#10;Аня|АК7Х2|4/5&#10;Боря|БР9М1|3/5"></textarea>
+    <button onclick="checkCodes()">📊 Проверить</button>
+    <button class="sec" onclick="showScreen('screen-login')">← Назад</button>
+    <div id="checkResults"></div>
+  </div>
+
+</div>
+
+<script>
 /* ===== ВОПРОСЫ ДЛЯ 1–2 КЛАССА ===== */
 const SLIDES = [
   { q:"Кто съел Колобка?",
@@ -16,3 +179,161 @@ const SLIDES = [
     img:"https://images.unsplash.com/photo-1596707062890-8f4f2a4e0e5a?w=800",
     options:["Красного","Синего","Зелёного","Жёлтого"], correct:0 }
 ];
+
+let playerName = "";
+let idx = 0;
+let score = 0;
+
+function showScreen(id) {
+  document.querySelectorAll('.wrap > div')
+    .forEach(d => d.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function startQuiz() {
+  const name = document.getElementById('nameInput').value.trim();
+  if (!name) { document.getElementById('loginMsg').textContent='Введи имя'; return; }
+  playerName = name;
+  idx = 0; score = 0;
+  showScreen('screen-question');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (idx >= SLIDES.length) { finish(); return; }
+  const s = SLIDES[idx];
+
+  const img = document.getElementById('qImg');
+  if (s.img) { img.src = s.img; img.style.display='block'; }
+  else img.style.display='none';
+
+  document.getElementById('qText').textContent = s.q;
+  document.getElementById('answerMsg').textContent = '';
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  s.options.forEach((text,i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.innerHTML = `<span class="letter">${'ABCD'[i]}</span><span>${text}</span>`;
+    b.onclick = () => chooseAnswer(i, b);
+    opts.appendChild(b);
+  });
+
+  const pr = document.getElementById('progress'); pr.innerHTML='';
+  SLIDES.forEach((_,i)=>{
+    const d=document.createElement('div'); d.className='dot';
+    if (i===idx) d.classList.add('active');
+    else if (i<idx) d.classList.add('done');
+    pr.appendChild(d);
+  });
+}
+
+function chooseAnswer(choice, btn) {
+  const s = SLIDES[idx];
+  const correct = choice === s.correct;
+
+  document.querySelectorAll('#options .opt').forEach(b=>b.disabled=true);
+
+  if (correct) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('answerMsg').textContent = '✅ Правильно!';
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#options .opt')[s.correct]
+      .classList.add('correct');
+    document.getElementById('answerMsg').textContent = '❌ Неправильно';
+  }
+
+  setTimeout(()=>{ idx++; renderQuestion(); }, 1200);
+}
+
+function makeCode() {
+  const ALPH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let rnd = "";
+  for (let i = 0; i < 4; i++)
+    rnd += ALPH[Math.floor(Math.random()*ALPH.length)];
+  return `${playerName}|${rnd}|${score}/${SLIDES.length}`;
+}
+
+function finish() {
+  showScreen('screen-result');
+  document.getElementById('resultText').textContent = `${playerName}, твой результат:`;
+  document.getElementById('resultScore').innerHTML =
+    `${score}<small> / ${SLIDES.length}</small>`;
+  const code = makeCode();
+  document.getElementById('reportCode').textContent = code;
+  document.getElementById('reportCode').dataset.code = code;
+}
+
+function copyCode() {
+  const el = document.getElementById('reportCode');
+  const code = el.dataset.code;
+  if (!code) return;
+  navigator.clipboard.writeText(code).then(() => {
+    const old = el.textContent;
+    el.textContent = '✅ Скопировано!';
+    setTimeout(()=>{ el.textContent = old; }, 1200);
+  });
+}
+
+function backToLogin() {
+  document.getElementById('nameInput').value = playerName;
+  showScreen('screen-login');
+}
+
+function checkCodes() {
+  const raw = document.getElementById('codesInput').value;
+  const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+  const rows = [];
+
+  lines.forEach(line => {
+    const parts = line.split('|');
+    if (parts.length < 3) return;
+    const name = parts[0].trim();
+    const code = parts[1].trim();
+    const scoreStr = parts[2].trim();
+    const m = scoreStr.match(/^(\d+)\s*\/\s*(\d+)$/);
+    if (!m) return;
+    rows.push({ name, code, sc: parseInt(m[1],10), total: parseInt(m[2],10) });
+  });
+
+  const box = document.getElementById('checkResults');
+  if (!rows.length) {
+    box.innerHTML = '<div class="empty">Нет валидных кодов. Формат: Имя|КОД|4/5</div>';
+    return;
+  }
+
+  rows.sort((a,b)=> b.sc - a.sc);
+
+  let html = '<table class="results-table"><thead><tr>' +
+             '<th>#</th><th>Имя</th><th>Код</th><th>Результат</th>' +
+             '</tr></thead><tbody>';
+  rows.forEach((r,i) => {
+    const cls = i === 0 ? 'top1' : '';
+    const medal = i === 0 ? '🥇 ' : (i === 1 ? '🥈 ' : (i === 2 ? '🥉 ' : ''));
+    html += `<tr>
+      <td>${i+1}</td>
+      <td class="${cls}">${medal}${escapeHtml(r.name)}</td>
+      <td style="color:#8a8a8a; font-family:monospace;">${escapeHtml(r.code)}</td>
+      <td class="${cls}">${r.sc} / ${r.total}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+
+  const avg = rows.reduce((s,r)=>s+r.sc,0) / rows.length;
+  html += `<div class="msg" style="margin-top:16px;">
+    Участников: ${rows.length} · Средний балл: ${avg.toFixed(1)}
+  </div>`;
+
+  box.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+</script>
+</body>
+</html>
