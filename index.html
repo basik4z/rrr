@@ -3,371 +3,71 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090b18">
-<title>NEBULA ROBLOX FACTORY PRO</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEBULA FACTORY PRO</title>
 
 <style>
-:root {
-  --bg:#090b18;
-  --panel:#15172c;
-  --border:#37315d;
-  --purple:#885cff;
-  --cyan:#55dff2;
-  --text:#f1efff;
-  --muted:#9693b5;
-  --green:#52e5b6;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#050505;color:#fff;
+ font-family:Arial,sans-serif;
 }
-
-* {
-  box-sizing:border-box;
+button{cursor:pointer;color:#fff;background:#111;
+ border:1px solid #333;border-radius:10px;padding:12px}
+button:hover{background:#252525}
+.layout{display:flex;min-height:100vh}
+.sidebar{
+ width:230px;padding:22px;border-right:1px solid #222;
+ background:#080808;flex-shrink:0
 }
-
-body {
-  margin:0;
-  background:radial-gradient(ellipse at top,#292052,var(--bg) 65%);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-  min-height:100vh;
+.logo{font-size:22px;font-weight:bold;margin-bottom:35px}
+.logo span{color:#777}
+.nav button{
+ display:block;width:100%;text-align:left;
+ margin-bottom:9px;border:0;background:transparent;
+ color:#aaa
 }
-
-button,input {
-  font:inherit;
+.nav button.active,.nav button:hover{
+ background:#1a1a1a;color:white
 }
-
-button {
-  cursor:pointer;
-  border:0;
+.main{flex:1;min-width:0}
+.topbar{
+ height:70px;border-bottom:1px solid #222;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 25px
 }
-
-.layout {
-  display:flex;
-  min-height:100vh;
+.content{padding:25px;max-width:1200px;margin:auto}
+.page{display:none;animation:fade .25s}
+.page.active{display:block}
+@keyframes fade{
+ from{opacity:0;transform:translateY(8px)}
+ to{opacity:1;transform:translateY(0)}
 }
-
-.sidebar {
-  width:245px;
-  background:#101123;
-  border-right:1px solid var(--border);
-  padding:24px 15px;
-  display:flex;
-  flex-direction:column;
-  flex-shrink:0;
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.card{
+ background:#0d0d0d;border:1px solid #262626;
+ border-radius:15px;padding:20px;margin-bottom:15px
 }
-
-.logo {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:10px;
-  margin-bottom:35px;
+.big{font-size:35px;font-weight:bold;margin:15px 0}
+.muted{color:#888}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.status{color:#aaa;font-size:13px}
+input{
+ background:#111;border:1px solid #333;color:white;
+ padding:12px;border-radius:9px;width:100%;margin:8px 0
 }
-
-.logo-icon {
-  font-size:32px;
-  color:var(--purple);
-  text-shadow:0 0 20px var(--purple);
-}
-
-.logo strong {
-  display:block;
-  font-size:17px;
-  letter-spacing:2px;
-}
-
-.logo small {
-  color:var(--muted);
-  letter-spacing:2px;
-}
-
-.menu {
-  display:grid;
-  gap:9px;
-}
-
-.menu button {
-  background:transparent;
-  color:#aaa6c9;
-  text-align:left;
-  padding:14px;
-  border-radius:10px;
-  transition:.2s;
-}
-
-.menu button:hover,
-.menu button.active {
-  background:#292044;
-  color:white;
-  box-shadow:inset 3px 0 var(--purple);
-}
-
-.sidebar-bottom {
-  margin-top:auto;
-  padding:15px 8px;
-  color:var(--green);
-  font-size:12px;
-}
-
-.main {
-  flex:1;
-  min-width:0;
-  padding:25px;
-}
-
-.topbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:25px;
-}
-
-.topbar h1 {
-  margin:0 0 7px;
-  font-size:27px;
-}
-
-.topbar p {
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.profile {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:12px;
-  font-size:12px;
-}
-
-.profile span {
-  color:var(--green);
-}
-
-.page {
-  display:none;
-}
-
-.page.active {
-  display:block;
-  animation:appear .3s ease;
-}
-
-@keyframes appear {
-  from {opacity:0;transform:translateY(8px)}
-  to {opacity:1;transform:translateY(0)}
-}
-
-.card {
-  background:linear-gradient(145deg,#191a33,#111326);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:21px;
-  margin-bottom:17px;
-  box-shadow:0 10px 30px #0003;
-}
-
-.card h2,
-.card h3 {
-  margin-top:0;
-  color:#d2c5ff;
-}
-
-.hero {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  min-height:210px;
-  background:linear-gradient(110deg,#27204e,#171a38);
-}
-
-.hero h2 {
-  font-size:30px;
-  line-height:1.2;
-}
-
-.hero p {
-  color:var(--muted);
-}
-
-.hero-icon {
-  font-size:100px;
-  color:#9b7cff;
-  text-shadow:0 0 40px #825aff;
-}
-
-.stats {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.stat strong {
-  display:block;
-  font-size:27px;
-  margin:12px 0;
-}
-
-.stat span,
-.stat small {
-  color:var(--muted);
-}
-
-.green {
-  color:var(--green);
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:15px;
-}
-
-.vm-status {
-  color:var(--muted);
-  font-size:13px;
-  margin:15px 0;
-}
-
-.progress {
-  height:8px;
-  background:#292943;
-  border-radius:10px;
-  overflow:hidden;
-  margin:15px 0;
-}
-
-.progress div {
-  width:0;
-  height:100%;
-  background:linear-gradient(90deg,var(--purple),var(--cyan));
-  transition:.4s;
-}
-
-.primary {
-  background:linear-gradient(110deg,#7650df,#9a60ed);
-  color:white;
-}
-
-.secondary {
-  background:#30334f;
-  color:white;
-}
-
-.danger {
-  background:#963d64;
-  color:white;
-}
-
-.action {
-  display:inline-block;
-  padding:12px 15px;
-  border-radius:9px;
-  text-decoration:none;
-  margin:5px 4px 5px 0;
-  font-size:13px;
-  font-weight:bold;
-}
-
-button.action {
-  border:0;
-}
-
-button,
-input {
-  border-radius:9px;
-  padding:12px;
-}
-
-input {
-  width:100%;
-  margin:10px 0;
-  background:#090b18;
-  border:1px solid var(--border);
-  color:white;
-}
-
-button:hover,
-.action:hover {
-  filter:brightness(1.2);
-}
-
-.hint {
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-}
-
-.logs {
-  height:220px;
-  overflow:auto;
-  background:#080a15;
-  color:var(--green);
-  padding:14px;
-  border-radius:10px;
-  font:12px/1.8 monospace;
-  white-space:pre-wrap;
-}
-
-footer {
-  text-align:center;
-  padding:25px;
-  color:#77728f;
-  font-size:11px;
-}
-
-@media(max-width:750px) {
-  .layout {
-    display:block;
-  }
-
-  .sidebar {
-    width:100%;
-    padding:12px;
-    border-right:0;
-    border-bottom:1px solid var(--border);
-  }
-
-  .logo {
-    margin-bottom:12px;
-  }
-
-  .menu {
-    display:flex;
-    overflow-x:auto;
-  }
-
-  .menu button {
-    white-space:nowrap;
-    font-size:12px;
-    padding:11px;
-  }
-
-  .sidebar-bottom {
-    display:none;
-  }
-
-  .main {
-    padding:15px;
-  }
-
-  .stats,
-  .grid {
-    grid-template-columns:1fr;
-  }
-
-  .hero h2 {
-    font-size:23px;
-  }
-
-  .hero-icon {
-    font-size:60px;
-  }
-
-  .topbar h1 {
-    font-size:21px;
-  }
+.primary{background:white;color:black;font-weight:bold}
+.primary:hover{background:#ddd}
+.topbuttons{display:flex;gap:8px}
+@media(max-width:700px){
+ .layout{display:block}
+ .sidebar{width:100%;border-right:0;border-bottom:1px solid #222;padding:15px}
+ .logo{margin-bottom:15px}
+ .nav{display:flex;overflow-x:auto;gap:7px}
+ .nav button{white-space:nowrap;width:auto;margin:0}
+ .content{padding:15px}
+ .grid{grid-template-columns:1fr}
+ .topbar{padding:0 15px}
 }
 </style>
 </head>
@@ -376,146 +76,124 @@ footer {
 <div class="layout">
 
 <aside class="sidebar">
-  <div class="logo">
-    <div class="logo-icon">✦</div>
-    <div>
-      <strong>NEBULA</strong>
-      <small>FACTORY PRO</small>
-    </div>
-  </div>
-
-  <nav class="menu">
-    <button class="active" data-page="dashboard">◈ Dashboard</button>
-    <button data-page="machines">▣ Virtual Machines</button>
-    <button data-page="browser">◎ Browser Assistant</button>
-    <button data-page="accounts">♙ Account Manager</button>
-    <button data-page="logs">▤ Activity Logs</button>
-    <button data-page="settings">⚙ Settings</button>
-  </nav>
-
-  <div class="sidebar-bottom">● INTERFACE ONLINE</div>
+<div class="logo">NEBULA <span>PRO</span></div>
+<div class="nav">
+<button class="active" data-page="dashboard">Dashboard</button>
+<button data-page="cloud">Cloud PC</button>
+<button data-page="roblox">Roblox Agent</button>
+<button data-page="accounts">Accounts</button>
+<button data-page="logs">Activity Logs</button>
+<button data-page="settings">Settings</button>
+</div>
 </aside>
 
-<main class="main">
-
+<div class="main">
 <header class="topbar">
-  <div>
-    <h1 id="page-title">Dashboard</h1>
-    <p>NEBULA Control Center</p>
-  </div>
-  <div class="profile">ADMIN <span>●</span></div>
+<b id="page-title">Dashboard</b>
+<div class="topbuttons">
+<button id="refresh">⟳</button>
+<button id="notifications">♧</button>
+</div>
 </header>
 
+<div class="content">
+
 <section id="dashboard" class="page active">
-  <div class="card hero">
-    <div>
-      <p>CONTROL CENTER</p>
-      <h2>NEBULA ROBLOX<br>FACTORY PRO</h2>
-      <p>Твоя система управления виртуальными машинами.</p>
-    </div>
-    <div class="hero-icon">✧</div>
-  </div>
+<h1>Dashboard</h1>
+<p class="muted">Virtual computer control center</p>
 
-  <div class="stats">
-    <div class="card stat">
-      <span>Виртуальные машины</span>
-      <strong>2</strong>
-      <small>Слоты VM</small>
-    </div>
-    <div class="card stat">
-      <span>RAM первой VM</span>
-      <strong>8 GB</strong>
-      <small>Настроенная память</small>
-    </div>
-    <div class="card stat">
-      <span>Состояние панели</span>
-      <strong class="green">ONLINE</strong>
-      <small>Интерфейс работает</small>
-    </div>
-  </div>
+<div class="grid">
+<div class="card">
+<div class="muted">Cloud computer</div>
+<div class="big" id="vm-status">OFFLINE</div>
+<div class="status">No virtual machine connected</div>
+</div>
+<div class="card">
+<div class="muted">Roblox</div>
+<div class="big">NOT READY</div>
+<div class="status">Waiting for cloud PC</div>
+</div>
+</div>
 
-  <div class="card">
-    <h3>Быстрые действия</h3>
-    <button class="action primary" onclick="showPage('machines')">
-      Открыть виртуальные машины
-    </button>
-    <button class="action secondary" onclick="showPage('browser')">
-      Открыть помощник
-    </button>
-  </div>
+<div class="card">
+<h2>Quick actions</h2>
+<div class="row">
+<button class="primary" data-go="cloud">CREATE CLOUD PC</button>
+<button data-action="start">START PC</button>
+<button data-action="stop">STOP PC</button>
+</div>
+</div>
 </section>
 
-<section id="machines" class="page">
-  <div class="grid">
-    <div class="card">
-      <h3>VIRTUAL MACHINE 01</h3>
-      <p class="vm-status" id="vm-status-1">● Не подключена</p>
-      <div class="progress"><div id="vm-bar-1"></div></div>
-      <p class="hint">Windows 10 · 8 GB RAM · 4 CPU · 80 GB</p>
-      <button class="action primary" onclick="demoVM(1,true)">Тест запуска</button>
-      <button class="action danger" onclick="demoVM(1,false)">Остановить</button>
-    </div>
+<section id="cloud" class="page">
+<h1>Cloud PC</h1>
+<p class="muted">Create your remote Windows computer</p>
 
-    <div class="card">
-      <h3>VIRTUAL MACHINE 02</h3>
-      <p class="vm-status" id="vm-status-2">● Не подключена</p>
-      <div class="progress"><div id="vm-bar-2"></div></div>
-      <p class="hint">Дополнительная виртуальная машина</p>
-      <button class="action primary" onclick="demoVM(2,true)">Тест запуска</button>
-      <button class="action danger" onclick="demoVM(2,false)">Остановить</button>
-    </div>
-  </div>
+<div class="card">
+<h2>Configuration</h2>
+<label>Operating system</label>
+<input value="Windows 10" disabled>
+<label>RAM</label>
+<input value="8 GB" disabled>
+<label>CPU</label>
+<input value="4 cores" disabled>
+<label>Disk</label>
+<input value="80 GB" disabled>
+<button class="primary" id="create">CREATE VIRTUAL PC</button>
+<p id="cloud-message" class="status">Cloud provider is not connected.</p>
+</div>
 
-  <div class="card">
-    <h3>Конфигурация VM 01</h3>
-    <p>Операционная система: Windows 10</p>
-    <p>RAM: 8192 MB</p>
-    <p>CPU: 4 ядра</p>
-    <p>Диск: 80 GB</p>
-    <p class="hint">Настройки пока отображаются в панели. Для реального создания VM нужен локальный агент VirtualBox.</p>
-  </div>
+<div class="card">
+<h2>Connection</h2>
+<p id="connection">No cloud computer</p>
+<button data-action="start">START</button>
+<button data-action="stop">STOP</button>
+</div>
 </section>
 
-<section id="browser" class="page">
-  <div class="card">
-    <h3>Browser Assistant</h3>
-    <p>Помощник для ручной работы с Roblox.</p>
-    <a class="action primary" href="https://www.roblox.com/" target="_blank" rel="noopener">Открыть Roblox ↗</a>
-    <p class="hint">Проверки безопасности и CAPTCHA выполняются пользователем.</p>
-  </div>
+<section id="roblox" class="page">
+<h1>Roblox Agent</h1>
+<div class="card">
+<h2>Automation</h2>
+<p class="muted">Agent requires a running Windows cloud PC.</p>
+<button id="install">INSTALL ROBLOX</button>
+<button id="launch">LAUNCH ROBLOX</button>
+<p id="agent-message">Agent offline</p>
+</div>
 </section>
 
 <section id="accounts" class="page">
-  <div class="card">
-    <h3>Account Manager</h3>
-    <p class="hint">Личные заметки для учёта собственных аккаунтов. Не вводи сюда пароли.</p>
-    <input id="account-note" placeholder="Название заметки">
-    <button class="action primary" onclick="saveNote()">Сохранить заметку</button>
-    <div id="notes"></div>
-  </div>
+<h1>Accounts</h1>
+<div class="card">
+<h2>Account manager</h2>
+<p class="muted">Manage your own Roblox account.</p>
+<input placeholder="Username">
+<input placeholder="Account note">
+<button id="save-account">SAVE</button>
+<p id="account-message"></p>
+</div>
 </section>
 
 <section id="logs" class="page">
-  <div class="card">
-    <h3>Activity Logs</h3>
-    <div class="logs" id="logs-list">NEBULA SYSTEM INITIALIZED</div>
-    <button class="action secondary" onclick="clearLogs()">Очистить журнал</button>
-  </div>
+<h1>Activity Logs</h1>
+<div class="card" id="log-list">NEBULA initialized.</div>
+<button id="clear-logs">CLEAR LOGS</button>
 </section>
 
 <section id="settings" class="page">
-  <div class="card">
-    <h3>Settings</h3>
-    <p>Project: NEBULA ROBLOX FACTORY PRO</p>
-    <p>Version: 1.0.0</p>
-    <p>Theme: Dark Nebula</p>
-    <p>VM Platform: Oracle VirtualBox</p>
-  </div>
+<h1>Settings</h1>
+<div class="card">
+<h2>System</h2>
+<p>NEBULA FACTORY PRO</p>
+<p>Theme: Black / White</p>
+<p>Cloud: Not connected</p>
+<button id="test">CHECK CONNECTION</button>
+<p id="settings-message"></p>
+</div>
 </section>
 
-<footer>NEBULA ROBLOX FACTORY PRO · 2026</footer>
-
-</main>
+</div>
+</div>
 </div>
 
 <script src="script.js"></script>
