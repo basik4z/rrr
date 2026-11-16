@@ -1,201 +1,186 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NEBULA FACTORY PRO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make iOS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#050505;color:#fff;
- font-family:Arial,sans-serif;
-}
-button{cursor:pointer;color:#fff;background:#111;
- border:1px solid #333;border-radius:10px;padding:12px}
-button:hover{background:#252525}
-.layout{display:flex;min-height:100vh}
-.sidebar{
- width:230px;padding:22px;border-right:1px solid #222;
- background:#080808;flex-shrink:0
-}
-.logo{font-size:22px;font-weight:bold;margin-bottom:35px}
-.logo span{color:#777}
-.nav button{
- display:block;width:100%;text-align:left;
- margin-bottom:9px;border:0;background:transparent;
- color:#aaa
-}
-.nav button.active,.nav button:hover{
- background:#1a1a1a;color:white
-}
-.main{flex:1;min-width:0}
-.topbar{
- height:70px;border-bottom:1px solid #222;
- display:flex;align-items:center;justify-content:space-between;
- padding:0 25px
-}
-.content{padding:25px;max-width:1200px;margin:auto}
-.page{display:none;animation:fade .25s}
-.page.active{display:block}
-@keyframes fade{
- from{opacity:0;transform:translateY(8px)}
- to{opacity:1;transform:translateY(0)}
-}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.card{
- background:#0d0d0d;border:1px solid #262626;
- border-radius:15px;padding:20px;margin-bottom:15px
-}
-.big{font-size:35px;font-weight:bold;margin:15px 0}
-.muted{color:#888}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.status{color:#aaa;font-size:13px}
-input{
- background:#111;border:1px solid #333;color:white;
- padding:12px;border-radius:9px;width:100%;margin:8px 0
-}
-.primary{background:white;color:black;font-weight:bold}
-.primary:hover{background:#ddd}
-.topbuttons{display:flex;gap:8px}
-@media(max-width:700px){
- .layout{display:block}
- .sidebar{width:100%;border-right:0;border-bottom:1px solid #222;padding:15px}
- .logo{margin-bottom:15px}
- .nav{display:flex;overflow-x:auto;gap:7px}
- .nav button{white-space:nowrap;width:auto;margin:0}
- .content{padding:15px}
- .grid{grid-template-columns:1fr}
- .topbar{padding:0 15px}
-}
-</style>
+        /* Контейнер телефона (эмуляция экрана) */
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            transition: filter 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            color: white;
+        }
+
+        /* Эффект затемнения */
+        .iphone-screen.dimmed {
+            filter: brightness(0.3);
+        }
+
+        /* Экран блокировки */
+        .lock-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: none; /* Скрыт по умолчанию */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            color: white;
+        }
+
+        .lock-screen.active {
+            display: flex;
+        }
+
+        .time {
+            font-size: 80px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .date {
+            font-size: 20px;
+            margin-bottom: 50px;
+        }
+
+        .swipe-up {
+            font-size: 16px;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Панель приложений (внизу) */
+        .dock {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            padding: 15px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #0078D7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
-<div class="layout">
 
-<aside class="sidebar">
-<div class="logo">NEBULA <span>PRO</span></div>
-<div class="nav">
-<button class="active" data-page="dashboard">Dashboard</button>
-<button data-page="cloud">Cloud PC</button>
-<button data-page="roblox">Roblox Agent</button>
-<button data-page="accounts">Accounts</button>
-<button data-page="logs">Activity Logs</button>
-<button data-page="settings">Settings</button>
-</div>
-</aside>
+    <!-- Экран iPhone -->
+    <div class="iphone-screen" id="screen" onclick="resetTimer()">
+        
+        <!-- Экран блокировки -->
+        <div class="lock-screen" id="lockScreen" onclick="unlock()">
+            <div class="time" id="clock">12:00</div>
+            <div class="date" id="date">Понедельник, 16 ноября</div>
+            <div class="swipe-up">Смахните вверх, чтобы разблокировать</div>
+        </div>
 
-<div class="main">
-<header class="topbar">
-<b id="page-title">Dashboard</b>
-<div class="topbuttons">
-<button id="refresh">⟳</button>
-<button id="notifications">♧</button>
-</div>
-</header>
+        <!-- Виджеты на рабочем столе -->
+        <div style="text-align: center; margin-top: 50px;">
+            <h1 style="font-size: 24px; text-shadow: 1px 1px 5px black;">Make iOS</h1>
+            <p style="font-size: 14px; opacity: 0.8;">Симулятор системы</p>
+        </div>
 
-<div class="content">
+        <!-- Док-панель -->
+        <div class="dock">
+            <div class="app-icon" style="background: #007AFF;">📞</div>
+            <div class="app-icon" style="background: #34C759;">💬</div>
+            <div class="app-icon" style="background: #FF9500;">📸</div>
+            <div class="app-icon" style="background: #FF2D55;">🎵</div>
+        </div>
 
-<section id="dashboard" class="page active">
-<h1>Dashboard</h1>
-<p class="muted">Virtual computer control center</p>
+    </div>
 
-<div class="grid">
-<div class="card">
-<div class="muted">Cloud computer</div>
-<div class="big" id="vm-status">OFFLINE</div>
-<div class="status">No virtual machine connected</div>
-</div>
-<div class="card">
-<div class="muted">Roblox</div>
-<div class="big">NOT READY</div>
-<div class="status">Waiting for cloud PC</div>
-</div>
-</div>
+    <script>
+        const screen = document.getElementById('screen');
+        const lockScreen = document.getElementById('lockScreen');
+        const clock = document.getElementById('clock');
+        const dateEl = document.getElementById('date');
 
-<div class="card">
-<h2>Quick actions</h2>
-<div class="row">
-<button class="primary" data-go="cloud">CREATE CLOUD PC</button>
-<button data-action="start">START PC</button>
-<button data-action="stop">STOP PC</button>
-</div>
-</div>
-</section>
+        let inactivityTimer;
+        const INACTIVITY_TIME = 60000; // 60 000 мс = 1 минута
 
-<section id="cloud" class="page">
-<h1>Cloud PC</h1>
-<p class="muted">Create your remote Windows computer</p>
+        // Функция для обновления времени
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            clock.innerText = hours + ':' + minutes;
 
-<div class="card">
-<h2>Configuration</h2>
-<label>Operating system</label>
-<input value="Windows 10" disabled>
-<label>RAM</label>
-<input value="8 GB" disabled>
-<label>CPU</label>
-<input value="4 cores" disabled>
-<label>Disk</label>
-<input value="80 GB" disabled>
-<button class="primary" id="create">CREATE VIRTUAL PC</button>
-<p id="cloud-message" class="status">Cloud provider is not connected.</p>
-</div>
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            dateEl.innerText = now.toLocaleDateString('ru-RU', options);
+        }
 
-<div class="card">
-<h2>Connection</h2>
-<p id="connection">No cloud computer</p>
-<button data-action="start">START</button>
-<button data-action="stop">STOP</button>
-</div>
-</section>
+        // Функция для блокировки экрана
+        function lockDevice() {
+            screen.classList.add('dimmed'); // Затемняем
+            setTimeout(() => {
+                lockScreen.classList.add('active'); // Показываем экран блокировки
+            }, 1000); // Через секунду после затемнения
+        }
 
-<section id="roblox" class="page">
-<h1>Roblox Agent</h1>
-<div class="card">
-<h2>Automation</h2>
-<p class="muted">Agent requires a running Windows cloud PC.</p>
-<button id="install">INSTALL ROBLOX</button>
-<button id="launch">LAUNCH ROBLOX</button>
-<p id="agent-message">Agent offline</p>
-</div>
-</section>
+        // Функция для разблокировки
+        function unlock() {
+            lockScreen.classList.remove('active');
+            screen.classList.remove('dimmed');
+            resetTimer(); // Сбрасываем таймер бездействия
+        }
 
-<section id="accounts" class="page">
-<h1>Accounts</h1>
-<div class="card">
-<h2>Account manager</h2>
-<p class="muted">Manage your own Roblox account.</p>
-<input placeholder="Username">
-<input placeholder="Account note">
-<button id="save-account">SAVE</button>
-<p id="account-message"></p>
-</div>
-</section>
+        // Сброс таймера при касании экрана
+        function resetTimer() {
+            clearTimeout(inactivityTimer);
+            // Если экран заблокирован, не запускаем таймер сразу
+            if (!lockScreen.classList.contains('active')) {
+                inactivityTimer = setTimeout(lockDevice, INACTIVITY_TIME);
+            }
+        }
 
-<section id="logs" class="page">
-<h1>Activity Logs</h1>
-<div class="card" id="log-list">NEBULA initialized.</div>
-<button id="clear-logs">CLEAR LOGS</button>
-</section>
+        // Запускаем таймер при загрузке
+        resetTimer();
+        updateClock();
+        setInterval(updateClock, 1000); // Обновляем время каждую секунду
 
-<section id="settings" class="page">
-<h1>Settings</h1>
-<div class="card">
-<h2>System</h2>
-<p>NEBULA FACTORY PRO</p>
-<p>Theme: Black / White</p>
-<p>Cloud: Not connected</p>
-<button id="test">CHECK CONNECTION</button>
-<p id="settings-message"></p>
-</div>
-</section>
+        // Слушаем касания/клики, чтобы сбрасывать таймер
+        document.addEventListener('touchstart', resetTimer);
+        document.addEventListener('mousedown', resetTimer);
 
-</div>
-</div>
-</div>
-
-<script src="script.js"></script>
+    </script>
 </body>
 </html>
